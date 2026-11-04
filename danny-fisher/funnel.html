@@ -1,0 +1,77 @@
+<!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TikTok Shop Starter Kit | Danny Fisher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+:root{--p:#111111;--a:#FE2C55;--bg:#FFFFFF;--ink:#111111;--soft:#F4F4F5;--line:#E4E4E7;--on:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}h1,h2,h3{font-family:'Space Grotesk',Arial,sans-serif;line-height:1.15;margin:0 0 .5em;font-weight:700}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}.narrow{max-width:760px}
+.bar{background:var(--p);color:var(--on);text-align:center;padding:10px 16px;font-size:14px;letter-spacing:.04em;font-weight:600}
+.btn{display:inline-block;background:var(--a);color:#fff;border:0;border-radius:14px;padding:18px 34px;font:700 17px Inter,Arial,sans-serif;cursor:pointer;text-decoration:none;box-shadow:0 10px 24px -10px rgba(0,0,0,.35);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn small{display:block;font-weight:500;font-size:13px;opacity:.9}
+.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:700;color:var(--a)}
+section{padding:72px 0}.soft{background:var(--soft)}
+.cd{display:flex;gap:10px;justify-content:center}.cd div{background:var(--p);color:var(--on);border-radius:12px;min-width:74px;padding:10px 8px;text-align:center}.cd b{display:block;font-size:30px;line-height:1.1;font-family:'Space Grotesk',Arial,sans-serif}.cd span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.grid{display:grid;gap:20px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px}
+.num{width:38px;height:38px;border-radius:50%;background:var(--p);color:var(--on);display:grid;place-items:center;font-weight:700;margin-bottom:12px}
+.center{text-align:center}.muted{opacity:.75}
+.hero{padding:56px 0 64px}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
+.hero h1{font-size:50px}.hero .photo{border-radius:24px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.45);aspect-ratio:4/5}.hero .photo img{width:100%;height:100%;object-fit:cover}
+.meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin:18px 0 26px;font-weight:600;font-size:15px}.meta span:before{content:'●';color:var(--a);margin-right:8px;font-size:10px;vertical-align:2px}
+.shots{columns:3;column-gap:16px}.shots img{width:100%;border-radius:14px;margin:0 0 16px;border:1px solid var(--line);break-inside:avoid;background:#fff}
+.vid{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#000}.vid img{width:100%;height:100%;object-fit:cover;opacity:.9}.vid:after{content:'';position:absolute;inset:0;margin:auto;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%23111'/%3E%3C/svg%3E") 56% 50%/30px no-repeat;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.quote{font-size:17px}.quote b{display:block;margin-top:12px;font-size:15px}
+.stars{color:#E0A526;letter-spacing:2px}
+.meet{display:grid;grid-template-columns:.8fr 1.2fr;gap:44px;align-items:center}.meet img{border-radius:24px;aspect-ratio:4/5;object-fit:cover;width:100%}
+.stats{display:flex;gap:26px;margin-top:20px;flex-wrap:wrap}.stats div b{display:block;font-family:'Space Grotesk',Arial,sans-serif;font-size:32px;color:var(--p)}.stats div span{font-size:14px}
+footer{padding:30px 0;font-size:12px;text-align:center;opacity:.6}
+.modal{position:fixed;inset:0;background:rgba(10,10,10,.6);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.on{display:flex}
+.mbox{background:#fff;color:#222;border-radius:20px;max-width:460px;width:100%;padding:30px;position:relative}.mbox h3{font-size:26px}.x{position:absolute;right:14px;top:10px;border:0;background:none;font-size:28px;cursor:pointer;color:#888}
+.mbox input,.mbox select{width:100%;padding:14px 16px;border:1px solid #ddd;border-radius:10px;font:16px Inter,Arial,sans-serif;margin:0 0 12px}.mbox .btn{width:100%}
+.prog{height:6px;background:#eee;border-radius:6px;overflow:hidden;margin-bottom:22px}.prog i{display:block;height:100%;background:var(--a);width:0;transition:width .3s}
+@media(max-width:860px){.hero-grid,.meet{grid-template-columns:1fr}.hero h1{font-size:36px}.g3,.g4{grid-template-columns:1fr 1fr}.shots{columns:2}section{padding:52px 0}}
+@media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}.shots{columns:1}.cd div{min-width:62px}.cd b{font-size:24px}.hero h1{font-size:31px}.btn{width:100%;text-align:center}}
+h1 em,h2 em{font-style:normal;color:var(--a)}
+</style></head><body>
+<div class="bar">LAUNCH PRICE: $27 (NORMALLY $97)  ·  ENDS SOON</div>
+<header class="hero"><div class="wrap hero-grid"><div>
+<div class="eyebrow">The TikTok Shop Starter Kit</div><h1>Make your first sales on TikTok Shop <em>from your phone</em></h1><p style="font-size:19px">The exact course, scripts and AI script writer Danny used to leave his 9 to 5, packaged into one starter kit you can begin tonight. One payment. Instant access.</p>
+<div class="meta"><span>Instant access</span><span>Works on your phone</span><span>Beginner friendly</span><span>Includes ScriptKit AI</span></div>
+<a href="#" class="btn" data-open="reg">Get the Starter Kit for $27<small>Launch price, normally $97</small></a>
+<p style="margin:22px 0 8px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700">Launch price ends in</p><div class="cd" data-cd style="justify-content:flex-start"></div>
+</div><div class="photo"><img src="img/danny-hero.jpg" alt="Danny Fisher" style="object-position:30% center"></div></div></header>
+
+<section class="soft"><div class="wrap"><div class="center"><div class="eyebrow">What's inside</div><h2 style="font-size:40px">Everything you need to get your first sale</h2></div>
+<div class="grid g2" style="margin-top:34px"><div class="card"><div class="num">1</div><h3 style="font-size:22px">Set up your shop the right way</h3><p style="margin:0">Account setup, affiliate approval and the settings that stop new creators getting stuck in week one.</p></div><div class="card"><div class="num">2</div><h3 style="font-size:22px">Pick products that actually sell</h3><p style="margin:0">How Danny finds winning products, reads commission rates and avoids the ones that waste your time.</p></div><div class="card"><div class="num">3</div><h3 style="font-size:22px">Script and film with ScriptKit</h3><p style="margin:0">Use Danny's AI script writer to turn any product into a hook-led video script in seconds.</p></div><div class="card"><div class="num">4</div><h3 style="font-size:22px">Post daily without burning out</h3><p style="margin:0">The simple routine Danny used while still working a full-time job, so you stay consistent.</p></div></div>
+<div class="center" style="margin-top:36px"><a href="#" class="btn" data-open="reg">Get the Starter Kit for $27</a></div></div></section>
+<section><div class="wrap narrow center"><div class="eyebrow">Everything you get today</div><h2 style="font-size:40px">The Starter Kit</h2>
+<div class="card" style="text-align:left;margin-top:26px"><div style="display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)"><span><b>The Starter Course</b><br><span class="muted" style="font-size:15px">Step-by-step lessons from account setup to your first sale</span></span><b style="white-space:nowrap">$297 value</b></div><div style="display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)"><span><b>ScriptKit AI script writer</b><br><span class="muted" style="font-size:15px">Danny's AI tool that writes TikTok Shop scripts for you</span></span><b style="white-space:nowrap">$97 value</b></div><div style="display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)"><span><b>30-day posting plan</b><br><span class="muted" style="font-size:15px">What to post every day for your first month</span></span><b style="white-space:nowrap">$47 value</b></div><div style="display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)"><span><b>Escape Society community</b><br><span class="muted" style="font-size:15px">Post your wins, ask questions, learn alongside others</span></span><b style="white-space:nowrap">$49 value</b></div>
+<div style="display:flex;justify-content:space-between;padding:18px 0 4px;font-size:20px"><b>Today</b><b><s class="muted" style="font-weight:400;margin-right:10px">$97</s>$27</b></div></div>
+<a href="#" class="btn" data-open="reg" style="margin-top:28px">Get the Starter Kit for $27</a></div></section>
+<section class="soft"><div class="wrap meet"><img src="img/danny-stpete.jpg" alt="Danny Fisher" style="object-position:center"><div>
+<div class="eyebrow">Meet Danny</div><h2 style="font-size:40px">I left my 9 to 5 by documenting everything on TikTok</h2><p>Danny was working a corporate job that made him feel empty. He started posting on TikTok Shop in his spare time and documented every step, the wins and the flops.</p><p>He built it to $10k a month while still working his 9 to 5, then left corporate for good. Now he lives in St. Pete, Florida, and helps people do the same through Escape Society.</p><p>His students include a nurse, a full-time working mum and his own 54-year-old brother.</p>
+<div class="stats"><div><b>52.9k</b><span>followers on Instagram</span></div><div><b>42</b><span>free training videos on YouTube</span></div><div><b>$38k</b><span>his best month (his own figure)</span></div></div></div></div></section>
+
+<section class="soft" id="proof"><div class="wrap"><div class="center"><div class="eyebrow">Student results</div><h2 style="font-size:40px">Regular people, real first sales</h2></div>
+<div class="grid g3" style="margin:34px 0"><div><div class="vid"><img src="img/proof-tyler.jpg" alt=""></div><p style="margin:10px 0 0;font-weight:700">Tyler</p><p class="muted" style="margin:0;font-size:15px">0 to $10k a month with UGC, no prior experience</p></div><div><div class="vid"><img src="img/proof-nurse.jpg" alt=""></div><p style="margin:10px 0 0;font-weight:700">The nurse who quit</p><p class="muted" style="margin:0;font-size:15px">$60K in 60 days on TikTok Shop</p></div><div><div class="vid"><img src="img/proof-seller.jpg" alt=""></div><p style="margin:10px 0 0;font-weight:700">$2M seller</p><p class="muted" style="margin:0;font-size:15px">He sold $2 million on TikTok Shop, then almost quit</p></div></div>
+<div class="grid g3" style="margin:34px 0"><div class="card quote"><div class="stars">★★★★★</div><p style="margin:8px 0 0">Went from $0 to $4k a month in 60 days on TikTok Shop.</p><b>Juan, student</b></div><div class="card quote"><div class="stars">★★★★★</div><p style="margin:8px 0 0">Doubled her income with TikTok Shop while working full time as a mum.</p><b>Kristyn, student</b></div><div class="card quote"><div class="stars">★★★★★</div><p style="margin:8px 0 0">Made $3k in his first 30 days on TikTok Shop, at 54.</p><b>Danny's brother</b></div></div>
+
+<p class="center muted" style="font-size:13px;margin-top:10px">Results come from Danny's published student case studies. They are not typical, and your results depend on your effort.</p>
+</div></section>
+<section><div class="wrap narrow center"><h2 style="font-size:42px">Start tonight for less than a takeaway</h2><p style="font-size:19px">One payment of $27. Instant access to the course, ScriptKit and the community.</p><div class="cd" data-cd style="margin:24px 0 30px"></div><a href="#" class="btn" data-open="reg">Get the Starter Kit for $27<small>Launch price, normally $97</small></a></div></section>
+<footer>Earnings shown are not typical or guaranteed. TikTok Shop results depend on effort, products and the platform.<br>Sample funnel page created for Danny Fisher by Mavryk.</footer>
+<div class="modal" id="reg"><div class="mbox"><button class="x" onclick="this.closest('.modal').classList.remove('on')">&times;</button>
+ <div class="eyebrow">Secure checkout</div><h3>The TikTok Shop Starter Kit for $27</h3>
+ <p class="muted" style="margin-top:-6px">Instant access. Sample checkout only, no payment is taken.</p>
+ <form onsubmit="event.preventDefault();location.href='thank-you.html'">
+ <input required placeholder="First name"><input required type="email" placeholder="Email address"><input placeholder="Card number (sample only)" disabled>
+ <label style="display:flex;gap:10px;align-items:flex-start;background:#FFF8E1;border:2px dashed #E0A526;border-radius:12px;padding:12px;margin:0 0 14px;font-size:14px"><input type="checkbox" checked style="width:auto;margin:3px 0 0"><span><b>Yes, add a personal account review from Danny for $37</b><br>Danny records a video walking through your account, your products and your first 5 posts, and tells you exactly what to change.</span></label>
+ <button class="btn" type="submit">Complete my order</button></form>
+ <p style="font-size:12px;color:#999;margin:12px 0 0;text-align:center">Sample page built by Mavryk. No data is collected.</p></div></div>
+ <script>document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();document.getElementById(b.dataset.open).classList.add('on')})});</script><script>
+(function(){var d=new Date();d.setDate(d.getDate()+3);d.setHours(19,0,0,0);window.EVENT=d;
+var opts={weekday:'long',month:'long',day:'numeric'};window.EVENT_STR=d.toLocaleDateString('en-US',opts)+' at 7pm';
+document.querySelectorAll('[data-eventdate]').forEach(function(e){e.textContent=window.EVENT_STR});
+function tick(){var ms=window.EVENT-new Date();if(ms<0)ms=0;var s=Math.floor(ms/1000),D=Math.floor(s/86400),H=Math.floor(s%86400/3600),M=Math.floor(s%3600/60),S=s%60;
+document.querySelectorAll('[data-cd]').forEach(function(el){var p=function(n){return String(n).padStart(2,'0')};el.innerHTML='<div><b>'+p(D)+'</b><span>Days</span></div><div><b>'+p(H)+'</b><span>Hours</span></div><div><b>'+p(M)+'</b><span>Mins</span></div><div><b>'+p(S)+'</b><span>Secs</span></div>'})}
+tick();setInterval(tick,1000);})();
+</script></body></html>

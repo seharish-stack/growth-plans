@@ -1,0 +1,74 @@
+/* Pipkin Resell sample funnel pages. Single dark look, matching his live brand (black + neon green). */
+:root {
+  --ink: #050807;
+  --panel: #0c1410;
+  --panel-2: #111c16;
+  --line: #1f3328;
+  --green: #2fe36f;
+  --green-deep: #0e8a3d;
+  --text: #eef5f0;
+  --muted: #9cb2a6;
+  --amber: #ffa41c;
+  --display: "Montserrat", "Arial Black", Arial, sans-serif;
+  --body: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--ink); color: var(--text); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+a { color: var(--green); }
+img { max-width: 100%; display: block; }
+.wrap { width: min(1080px, 100%); margin-inline: auto; padding-inline: 20px; }
+.sample-bar { background: #1b120b; color: #ffd9a8; font-size: 13px; text-align: center; padding: 8px 16px; letter-spacing: .02em; }
+.sample-bar b { color: var(--amber); }
+.glow { background: radial-gradient(1100px 520px at 70% -10%, rgba(47,227,111,.28), transparent 60%), var(--ink); }
+.logo { display: inline-flex; align-items: center; gap: 0; font-family: var(--display); font-weight: 700; letter-spacing: .28em; font-size: 13px; }
+.logo span:first-child { color: var(--green); padding: 4px 8px; }
+.logo span:last-child { background: var(--text); color: var(--ink); padding: 4px 8px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(30px, 5.2vw, 54px); font-weight: 800; letter-spacing: -.01em; }
+h2 { font-size: clamp(26px, 3.8vw, 40px); font-weight: 800; }
+h3 { font-size: 20px; font-weight: 700; }
+.hl { color: var(--green); }
+.eyebrow { font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--green); }
+.muted { color: var(--muted); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--green); color: #03140a; font-family: var(--display); font-weight: 800; font-size: 18px; padding: 18px 30px; border-radius: 12px; border: 0; cursor: pointer; text-decoration: none; box-shadow: 0 0 0 4px rgba(47,227,111,.18), 0 12px 30px rgba(47,227,111,.25); transition: transform .15s ease; }
+.btn:hover { transform: translateY(-2px); }
+.btn:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+.btn small { display: block; font-size: 12px; font-weight: 600; opacity: .8; }
+section { padding-block: 64px; }
+.center { text-align: center; }
+.stack { display: flex; flex-direction: column; gap: 16px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 24px; min-width: 0; }
+.timer { display: inline-flex; gap: 10px; }
+.timer div { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; min-width: 72px; text-align: center; }
+.timer b { display: block; font-family: var(--display); font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--text); line-height: 1.1; }
+.timer span { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.vid { position: relative; border-radius: 18px; overflow: hidden; border: 2px solid var(--green); box-shadow: 0 0 40px rgba(47,227,111,.25); background: #000; }
+.vid img { width: 100%; height: 100%; object-fit: cover; }
+.play { position: absolute; inset: 0; display: grid; place-items: center; }
+.play i { width: 84px; height: 84px; border-radius: 50%; background: rgba(5,8,7,.72); border: 2px solid var(--green); display: grid; place-items: center; }
+.play i::after { content: ""; border-left: 26px solid var(--text); border-top: 16px solid transparent; border-bottom: 16px solid transparent; margin-left: 6px; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+.thumb { display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: var(--text); }
+.thumb .vid { aspect-ratio: 16/9; border-width: 1px; box-shadow: none; }
+.thumb .play i { width: 54px; height: 54px; }
+.thumb .play i::after { border-left-width: 17px; border-top-width: 11px; border-bottom-width: 11px; margin-left: 4px; }
+.thumb h3 { font-size: 16px; }
+.quote { font-size: 17px; }
+.quote footer { margin-top: 10px; color: var(--muted); font-size: 14px; }
+.stars { color: var(--amber); letter-spacing: 2px; }
+.disclaimer { font-size: 12.5px; color: #6f8479; line-height: 1.55; border-top: 1px solid var(--line); padding-block: 28px; }
+/* modal form */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,.72); display: grid; place-items: center; padding: 16px; z-index: 50; }
+.modal .box { background: var(--panel); border: 1px solid var(--green-deep); border-radius: 20px; width: min(480px, 100%); padding: 28px; position: relative; max-height: 92vh; overflow: auto; }
+.modal .x { position: absolute; top: 10px; right: 12px; background: none; border: 0; color: var(--muted); font-size: 26px; cursor: pointer; }
+label { display: block; font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+input[type=text], input[type=email], input[type=tel] { width: 100%; background: var(--ink); border: 1px solid var(--line); color: var(--text); border-radius: 10px; padding: 14px; font: inherit; }
+.bar { height: 10px; border-radius: 99px; background: var(--panel-2); overflow: hidden; }
+.bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--green-deep), var(--green)); }
+.check { display: grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: start; }
+.check b.n { width: 26px; height: 26px; border-radius: 50%; background: var(--green); color: #03140a; display: grid; place-items: center; font-family: var(--display); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

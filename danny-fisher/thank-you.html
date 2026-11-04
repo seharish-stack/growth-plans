@@ -1,0 +1,61 @@
+<!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Order received | TikTok Shop Starter Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+:root{--p:#111111;--a:#FE2C55;--bg:#FFFFFF;--ink:#111111;--soft:#F4F4F5;--line:#E4E4E7;--on:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}h1,h2,h3{font-family:'Space Grotesk',Arial,sans-serif;line-height:1.15;margin:0 0 .5em;font-weight:700}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}.narrow{max-width:760px}
+.bar{background:var(--p);color:var(--on);text-align:center;padding:10px 16px;font-size:14px;letter-spacing:.04em;font-weight:600}
+.btn{display:inline-block;background:var(--a);color:#fff;border:0;border-radius:14px;padding:18px 34px;font:700 17px Inter,Arial,sans-serif;cursor:pointer;text-decoration:none;box-shadow:0 10px 24px -10px rgba(0,0,0,.35);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}.btn small{display:block;font-weight:500;font-size:13px;opacity:.9}
+.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:700;color:var(--a)}
+section{padding:72px 0}.soft{background:var(--soft)}
+.cd{display:flex;gap:10px;justify-content:center}.cd div{background:var(--p);color:var(--on);border-radius:12px;min-width:74px;padding:10px 8px;text-align:center}.cd b{display:block;font-size:30px;line-height:1.1;font-family:'Space Grotesk',Arial,sans-serif}.cd span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.grid{display:grid;gap:20px}.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px}
+.num{width:38px;height:38px;border-radius:50%;background:var(--p);color:var(--on);display:grid;place-items:center;font-weight:700;margin-bottom:12px}
+.center{text-align:center}.muted{opacity:.75}
+.hero{padding:56px 0 64px}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
+.hero h1{font-size:50px}.hero .photo{border-radius:24px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.45);aspect-ratio:4/5}.hero .photo img{width:100%;height:100%;object-fit:cover}
+.meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin:18px 0 26px;font-weight:600;font-size:15px}.meta span:before{content:'●';color:var(--a);margin-right:8px;font-size:10px;vertical-align:2px}
+.shots{columns:3;column-gap:16px}.shots img{width:100%;border-radius:14px;margin:0 0 16px;border:1px solid var(--line);break-inside:avoid;background:#fff}
+.vid{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:16/9;background:#000}.vid img{width:100%;height:100%;object-fit:cover;opacity:.9}.vid:after{content:'';position:absolute;inset:0;margin:auto;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%23111'/%3E%3C/svg%3E") 56% 50%/30px no-repeat;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.quote{font-size:17px}.quote b{display:block;margin-top:12px;font-size:15px}
+.stars{color:#E0A526;letter-spacing:2px}
+.meet{display:grid;grid-template-columns:.8fr 1.2fr;gap:44px;align-items:center}.meet img{border-radius:24px;aspect-ratio:4/5;object-fit:cover;width:100%}
+.stats{display:flex;gap:26px;margin-top:20px;flex-wrap:wrap}.stats div b{display:block;font-family:'Space Grotesk',Arial,sans-serif;font-size:32px;color:var(--p)}.stats div span{font-size:14px}
+footer{padding:30px 0;font-size:12px;text-align:center;opacity:.6}
+.modal{position:fixed;inset:0;background:rgba(10,10,10,.6);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.on{display:flex}
+.mbox{background:#fff;color:#222;border-radius:20px;max-width:460px;width:100%;padding:30px;position:relative}.mbox h3{font-size:26px}.x{position:absolute;right:14px;top:10px;border:0;background:none;font-size:28px;cursor:pointer;color:#888}
+.mbox input,.mbox select{width:100%;padding:14px 16px;border:1px solid #ddd;border-radius:10px;font:16px Inter,Arial,sans-serif;margin:0 0 12px}.mbox .btn{width:100%}
+.prog{height:6px;background:#eee;border-radius:6px;overflow:hidden;margin-bottom:22px}.prog i{display:block;height:100%;background:var(--a);width:0;transition:width .3s}
+@media(max-width:860px){.hero-grid,.meet{grid-template-columns:1fr}.hero h1{font-size:36px}.g3,.g4{grid-template-columns:1fr 1fr}.shots{columns:2}section{padding:52px 0}}
+@media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}.shots{columns:1}.cd div{min-width:62px}.cd b{font-size:24px}.hero h1{font-size:31px}.btn{width:100%;text-align:center}}
+h1 em,h2 em{font-style:normal;color:var(--a)}
+</style><style>
+.email{background:#fff;border-radius:16px;box-shadow:0 30px 60px -30px rgba(0,0,0,.4);overflow:hidden;border:1px solid #e6e6e6;color:#222;font-size:15px;text-align:left}
+.etop{background:#f2f2f2;padding:10px 14px;display:flex;gap:6px;align-items:center}.etop span{width:11px;height:11px;border-radius:50%;background:#ff5f57}.etop span:nth-child(2){background:#febc2e}.etop span:nth-child(3){background:#28c840}.etop b{margin-left:10px;font-size:13px;color:#666}
+.ehead{display:flex;gap:12px;padding:16px 20px;border-bottom:1px solid #eee;align-items:center}.ehead img{width:42px;height:42px;border-radius:50%;object-fit:cover}.ebody{padding:8px 22px 22px}
+.step{display:grid;grid-template-columns:54px 1fr;gap:16px;align-items:start;text-align:left;margin-bottom:22px}.step .num{width:54px;height:54px;font-size:22px;margin:0}
+.pbar{height:16px;background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--line);margin:18px auto 6px;max-width:520px}.pbar i{display:block;height:100%;width:90%;background:var(--a)}
+</style></head><body>
+<div class="bar">ORDER RECEIVED  ·  ONE LAST STEP BELOW</div>
+<section style="padding-top:50px"><div class="wrap narrow center">
+<div class="pbar"><i></i></div><p class="muted" style="font-size:14px;margin:0 0 20px">90% complete</p>
+<h1 style="font-size:46px">Your Starter Kit is almost ready</h1><p style="font-size:20px">Your order is in. Here's how to get the most out of your kit, starting <b>today</b>.</p>
+<div class="vid" style="margin:30px 0 10px"><img src="img/danny-guide.jpg" alt="" style="object-position:center"></div><p class="muted" style="font-size:14px">A 2-minute welcome from Danny. Watch this first.</p>
+</div></section>
+<section class="soft"><div class="wrap grid g2" style="align-items:center;gap:44px"><div>
+<div class="eyebrow">Get started</div><h2 style="font-size:36px">3 steps to get your first win this week</h2>
+<div class="step"><div class="num">1</div><div><h3 style="font-size:21px;margin-bottom:4px">Check your inbox for your login</h3><p style="margin:0">The email "Your Starter Kit is ready" has your login. Move it to your Primary tab.</p></div></div><div class="step"><div class="num">2</div><div><h3 style="font-size:21px;margin-bottom:4px">Open ScriptKit and write your first script</h3><p style="margin:0">Pick any product and let ScriptKit write your first video in under a minute.</p></div></div><div class="step"><div class="num">3</div><div><h3 style="font-size:21px;margin-bottom:4px">Post your first video within 24 hours</h3><p style="margin:0">Then share it in the Escape Society community so Danny can cheer you on.</p></div></div>
+</div><div><p class="center" style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:700">Look for this email</p><div class="email"><div class="etop"><span></span><span></span><span></span><b>Inbox</b></div>
+<div class="ehead"><img src="img/danny-hero.jpg" alt=""><div><b>Danny Fisher</b> <span class="muted">&lt;hello@yourdomain.com&gt;</span><br><span style="font-weight:700">Your Starter Kit is ready</span></div></div>
+<div class="ebody"><p>Hey Sarah,</p><p>Your <b>TikTok Shop Starter Kit</b> is unlocked. Your login is below.</p><p>Start with Lesson 1, then open ScriptKit and write your first script tonight.</p><p>Let's go,<br>Danny</p><a class="btn" style="padding:12px 22px;font-size:15px;box-shadow:none" href="#">Log in to my kit</a></div></div></div></div></section>
+
+<footer>Sample thank-you page created for Danny Fisher by Mavryk.</footer><script>
+(function(){var d=new Date();d.setDate(d.getDate()+3);d.setHours(19,0,0,0);window.EVENT=d;
+var opts={weekday:'long',month:'long',day:'numeric'};window.EVENT_STR=d.toLocaleDateString('en-US',opts)+' at 7pm';
+document.querySelectorAll('[data-eventdate]').forEach(function(e){e.textContent=window.EVENT_STR});
+function tick(){var ms=window.EVENT-new Date();if(ms<0)ms=0;var s=Math.floor(ms/1000),D=Math.floor(s/86400),H=Math.floor(s%86400/3600),M=Math.floor(s%3600/60),S=s%60;
+document.querySelectorAll('[data-cd]').forEach(function(el){var p=function(n){return String(n).padStart(2,'0')};el.innerHTML='<div><b>'+p(D)+'</b><span>Days</span></div><div><b>'+p(H)+'</b><span>Hours</span></div><div><b>'+p(M)+'</b><span>Mins</span></div><div><b>'+p(S)+'</b><span>Secs</span></div>'})}
+tick();setInterval(tick,1000);})();
+</script></body></html>

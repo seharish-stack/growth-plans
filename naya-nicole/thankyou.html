@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Seat Almost Saved</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap">
+<link rel="stylesheet" href="sample.css">
+<style>
+  .confirm { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .confirm article { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 22px; display: flex; flex-direction: column; gap: 8px; }
+  .confirm .k { width: 38px; height: 38px; border-radius: 50%; background: var(--wine); color: #fff; display: grid; place-items: center; font-weight: 800; }
+  .confirm p { color: var(--ink-2); font-size: 15.5px; }
+  .mail { background: #fff; border: 1px solid #e4e1e3; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 50px rgba(42,18,24,.14); font-family: Arial, "Helvetica Neue", sans-serif; color: #202124; }
+  .mail .chrome { background: #f2f2f4; padding: 10px 14px; display: flex; gap: 6px; align-items: center; border-bottom: 1px solid #e4e1e3; }
+  .mail .chrome i { width: 11px; height: 11px; border-radius: 50%; background: #d9d3d6; display: block; }
+  .mail .chrome span { margin-left: 10px; font-size: 12px; color: #6b6b70; }
+  .mail .hd { padding: 18px 22px 12px; border-bottom: 1px solid #eee; display: flex; gap: 12px; align-items: center; }
+  .mail .hd img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+  .mail .subj { font-size: 19px; font-weight: 700; padding: 18px 22px 0; }
+  .mail .who { font-size: 13px; color: #5f6368; }
+  .mail .who b { color: #202124; }
+  .mail .bd { padding: 14px 22px 24px; font-size: 15px; line-height: 1.55; display: flex; flex-direction: column; gap: 12px; }
+  .mail .pinkbtn { align-self: flex-start; background: #8f1a3f; color: #fff; font-weight: 700; padding: 12px 22px; border-radius: 999px; }
+  .mail .gift { border: 1px dashed #e5b6c4; background: #fff6f8; border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+  .oto { background: var(--paper); border: 2px solid var(--wine); border-radius: 26px; overflow: hidden; display: grid; grid-template-columns: .9fr 1.1fr; }
+  .oto > * { min-width: 0; }
+  .oto .art { background: var(--wine-deep); color: #fff; padding: 28px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+  .oto .art b { font-family: var(--serif); font-size: 30px; line-height: 1.1; }
+  .oto .art s { opacity: .7; }
+  .oto .copy { padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+  .oto ul { margin: 0; padding-left: 20px; color: var(--ink-2); display: flex; flex-direction: column; gap: 6px; }
+  .oto .acts { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .linkbtn { background: none; border: 0; color: var(--ink-2); text-decoration: underline; font: 15px var(--sans); cursor: pointer; padding: 6px; }
+  .order { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 18px 22px; }
+  /* product stack mock-up */
+  .stackwrap { display: grid; grid-template-columns: 1.25fr .75fr; gap: 36px; align-items: center; }
+  .stackwrap > * { min-width: 0; }
+  .stage { position: relative; aspect-ratio: 5/4; max-width: 100%; background: radial-gradient(70% 60% at 50% 40%, #ffffff 0%, var(--blush-2) 70%, var(--pink) 100%); border-radius: 28px; overflow: hidden; }
+  .laptop { position: absolute; left: 8%; top: 14%; width: 64%; }
+  .laptop .scr { background: #1d1216; border-radius: 12px 12px 0 0; padding: 2.2% 2.2% 3%; box-shadow: 0 20px 40px rgba(42,18,24,.25); }
+  .laptop .scr img { width: 100%; aspect-ratio: 16/11; object-fit: cover; object-position: top; border-radius: 4px; }
+  .laptop .base { height: 0; padding-bottom: 3.2%; background: linear-gradient(#d9cfd3, #b9adb2); border-radius: 0 0 14px 14px; margin: 0 -7%; }
+  .phone { position: absolute; right: 7%; top: 30%; width: 19%; background: #1d1216; border-radius: 18px; padding: 1.6% 1.2%; box-shadow: 0 18px 34px rgba(42,18,24,.3); }
+  .phone .in { border-radius: 12px; overflow: hidden; aspect-ratio: 9/19; position: relative; background: var(--wine-deep); }
+  .phone img { width: 100%; height: 62%; object-fit: cover; object-position: 50% 30%; }
+  .phone .lbl { position: absolute; left: 0; right: 0; bottom: 0; padding: 8%; color: #fff; font-size: clamp(8px, 1.3vw, 11px); line-height: 1.25; }
+  .phone .lbl b { display: block; font-family: var(--serif); font-size: clamp(10px, 1.6vw, 14px); }
+  .phone .pp { position: absolute; left: 50%; top: 31%; transform: translate(-50%,-50%); width: 34%; aspect-ratio: 1; border-radius: 50%; background: rgba(255,255,255,.92); display: grid; place-items: center; }
+  .phone .pp::after { content: ""; border-left: 9px solid var(--wine); border-top: 6px solid transparent; border-bottom: 6px solid transparent; margin-left: 2px; }
+  .book { position: absolute; left: 4%; bottom: 7%; width: 21%; aspect-ratio: 3/4; background: linear-gradient(135deg, var(--wine) 0%, var(--wine-deep) 100%); border-radius: 4px 10px 10px 4px; box-shadow: 8px 14px 26px rgba(42,18,24,.32), inset 6px 0 0 rgba(0,0,0,.18); color: #fff; padding: 8% 6%; display: flex; flex-direction: column; justify-content: space-between; transform: rotate(-6deg); }
+  .book b { font-family: var(--serif); font-size: clamp(10px, 1.7vw, 16px); line-height: 1.1; }
+  .book span { font-size: clamp(7px, 1vw, 9px); letter-spacing: .12em; text-transform: uppercase; color: var(--pink); }
+  .doc { position: absolute; left: 27%; bottom: 5%; width: 20%; aspect-ratio: 3/4; background: #fff; border-radius: 6px; box-shadow: 0 14px 26px rgba(42,18,24,.2); padding: 6%; display: flex; flex-direction: column; gap: 6%; transform: rotate(3deg); }
+  .doc b { font-family: var(--serif); font-size: clamp(9px, 1.4vw, 13px); line-height: 1.1; color: var(--ink); }
+  .doc i { display: block; height: 5%; background: var(--blush-2); border-radius: 3px; }
+  .doc i.s { width: 60%; background: var(--pink); }
+  .app { position: absolute; right: 4%; bottom: 6%; width: 38%; background: #fff; border-radius: 12px; box-shadow: 0 18px 34px rgba(42,18,24,.22); overflow: hidden; }
+  .app .tb { display: flex; align-items: center; gap: 5px; padding: 6px 9px; background: #f4f1f2; border-bottom: 1px solid #ece6e8; font-size: clamp(8px, 1.1vw, 11px); font-weight: 700; color: #3b2a30; }
+  .app .tb i { width: 7px; height: 7px; border-radius: 50%; background: #d9d1d4; display: block; }
+  .app .tb span { margin-left: 4px; }
+  .app .bd { padding: 9px; display: grid; grid-template-columns: 1fr 1.4fr; gap: 7px; }
+  .app .bd div { background: var(--blush); border-radius: 6px; min-height: 22px; }
+  .app .bd div.hero2 { grid-column: span 2; min-height: 30px; background: linear-gradient(90deg, var(--pink), var(--blush-2)); display: flex; align-items: center; padding: 0 8px; font-size: clamp(8px, 1.1vw, 11px); font-weight: 700; color: var(--wine-deep); }
+  .tag { position: absolute; background: var(--ink); color: #fff; font-size: clamp(9px, 1.15vw, 12px); font-weight: 700; padding: 4px 9px; border-radius: 999px; white-space: nowrap; }
+  .getlist { display: flex; flex-direction: column; gap: 10px; }
+  .getlist div { display: flex; gap: 12px; align-items: flex-start; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+  .getlist .ck { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--wine); color: #fff; display: grid; place-items: center; font-size: 13px; font-weight: 800; }
+  .getlist b { display: block; font-size: 15.5px; }
+  .getlist span { color: var(--ink-2); font-size: 14px; line-height: 1.4; }
+  @media (max-width: 820px) { .confirm, .oto, .stackwrap { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="topbar">Payment received · one last step to confirm your seat</div>
+
+<header class="narrow hero stack center" style="gap:22px;align-items:center;padding-block:48px 28px">
+  <p class="eyebrow">Don't close this page yet</p>
+  <h1>Your seat is almost saved. Here's how to get the most out of our training on <em data-date>Sunday, October 25</em></h1>
+  <p class="lead">Watch this two-minute message from Naya, then do the three steps below so your link and reminders reach you.</p>
+</header>
+
+<div class="narrow">
+  <div class="video" role="img" aria-label="Video: a two-minute welcome message from Naya">
+    <img src="img/naya_vsl.jpg" alt="">
+    <span class="play"></span>
+    <div class="bar"><span>A quick hello from Naya</span><span>2:04</span></div>
+  </div>
+</div>
+
+<section class="band" style="padding-block:64px 0">
+  <div class="wrap stack" style="gap:26px">
+    <div class="stack center" style="gap:10px;align-items:center">
+      <p class="eyebrow">Everything that's now yours</p>
+      <h2>Your seat comes with <em>all of this</em></h2>
+    </div>
+    <div class="stackwrap">
+      <div class="stage" role="img" aria-label="Mock-up of the training dashboard on a laptop, the replay on a phone, the 30-Day Roadmap PDF, the portfolio template and the Base44 app">
+        <div class="laptop"><div class="scr"><img src="img/dashboard.jpg" alt=""></div><div class="base"></div></div>
+        <div class="phone"><div class="in"><img src="img/naya_vsl.jpg" alt=""><span class="pp"></span><div class="lbl"><b>Class replay</b>48 hours</div></div></div>
+        <div class="book"><span>remotecloseher</span><b>The 30-Day Remote Sales Roadmap</b><span>PDF guide</span></div>
+        <div class="doc"><b>Sales Portfolio Template</b><i class="s"></i><i></i><i></i><i class="s"></i><i></i><i></i></div>
+        <div class="app"><div class="tb"><i></i><i></i><i></i><span>Base44</span></div><div class="bd"><div class="hero2">Your sales portfolio</div><div></div><div></div><div></div><div></div></div></div>
+        <span class="tag" style="left:9%;top:6%">Live masterclass</span>
+        <span class="tag" style="right:6%;top:21%">Replay</span>
+        <span class="tag" style="right:20%;bottom:33%;background:var(--wine)">Base44 subscription</span>
+      </div>
+      <div class="getlist">
+        <div><span class="ck">✓</span><p><b>Live masterclass seat</b><span><span data-date>Sunday, October 25</span>, 7pm ET, 90 minutes with Naya</span></p></div>
+        <div><span class="ck">✓</span><p><b>48-hour replay</b><span>Rewatch the framework and the live role-play</span></p></div>
+        <div><span class="ck">✓</span><p><b>The 30-Day Remote Sales Roadmap</b><span>Printable PDF plan, in your inbox now</span></p></div>
+        <div><span class="ck">✓</span><p><b>Sales portfolio template</b><span>The layout Naya's students use to get interviews</span></p></div>
+        <div><span class="ck">✓</span><p><b>Base44 subscription</b><span>The tool you'll build your sales portfolio in, set up with you on your onboarding call</span></p></div>
+        <div id="bumpItem" hidden><span class="ck">✓</span><p><b>Interview Prep Kit</b><span>Role-play scripts and 25 interview questions</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap stack" style="gap:26px">
+    <div class="stack center" style="gap:10px;align-items:center">
+      <p class="eyebrow">Confirm your seat in 3 steps</p>
+      <h2>Your link only goes to <em>confirmed</em> seats</h2>
+    </div>
+    <div class="confirm">
+      <article><span class="k">1</span><h3>Open the email from Naya</h3><p>Subject: "You're in". Click the pink <b>Yes, I'm coming</b> button. Check Promotions or Spam if it isn't in your inbox.</p></article>
+      <article><span class="k">2</span><h3>Add the class to your calendar</h3><p><span data-date>Sunday, October 25</span> at 7pm ET, 90 minutes. Block the time so nothing books over it.</p></article>
+      <article><span class="k">3</span><h3>Watch for the reminder text</h3><p>Naya's team texts your link 15 minutes before the class starts. Save the number when it arrives.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="band white">
+  <div class="wrap" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:36px;align-items:center">
+    <div class="stack" style="min-width:0">
+      <p class="eyebrow">This is the email you're looking for</p>
+      <h2>Find it, then click the <em>pink button</em></h2>
+      <p class="lead">It also holds your free gift: the 30-Day Remote Sales Roadmap. Read it before the class and everything Naya teaches will land faster.</p>
+      <div class="order stack" style="gap:6px">
+        <b>Your order</b>
+        <div class="summary" style="border:0;padding:0">
+          <div><span>Remote CloseHer Masterclass</span><span>$27</span></div>
+          <div id="bumpLine" hidden><span>Interview Prep Kit</span><span>$17</span></div>
+        </div>
+      </div>
+    </div>
+    <figure class="mail" style="margin:0;min-width:0" aria-label="Example of the confirmation email">
+      <div class="chrome"><i></i><i></i><i></i><span>Inbox</span></div>
+      <div class="subj">You're in: Remote CloseHer Masterclass, <span data-date-short>Sun, Oct 25</span> at 7pm ET</div>
+      <div class="hd"><img src="img/naya_avatar.jpg" alt=""><div class="who"><b>Naya Nicole</b> · remotecloseher<br>to you · just now</div></div>
+      <div class="bd">
+        <p>Hey Jasmine,</p>
+        <p>Your seat for the Remote CloseHer Masterclass is reserved. Tap below so I know you're coming and your link reaches you.</p>
+        <span class="pinkbtn">Yes, I'm coming</span>
+        <div class="gift">🎁 Your free gift: <b>The 30-Day Remote Sales Roadmap</b> (PDF)</div>
+        <p>See you <span data-date>Sunday, October 25</span>,<br>Naya</p>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap stack" style="gap:26px">
+    <div class="stack center" style="gap:10px;align-items:center">
+      <p class="eyebrow">One-time offer · only on this page</p>
+      <h2>Want a head start <em>before the class?</em></h2>
+    </div>
+    <article class="oto" id="oto1">
+      <div class="art"><span class="eyebrow" style="color:var(--pink)">From the $5,000 program</span><b>The Real Sales Call Library</b><span><s>$350</s> &nbsp;Today $47</span></div>
+      <div class="copy">
+        <h3>Hear how real setting and closing calls sound</h3>
+        <ul>
+          <li>Recorded calls from real coaching offers, start to finish</li>
+          <li>Naya's notes on what each rep did right and wrong</li>
+          <li>Listen before the class so the live role-play clicks straight away</li>
+        </ul>
+        <div class="acts"><button class="btn" data-add="Call Library ($47)">Yes, add it for $47</button><button class="linkbtn" data-skip="oto1">No thanks</button></div>
+      </div>
+    </article>
+    <article class="oto" id="oto2">
+      <div class="art"><span class="eyebrow" style="color:var(--pink)">From the $5,000 program</span><b>The Objection Handling Vault</b><span><s>$500</s> &nbsp;Today $97</span></div>
+      <div class="copy">
+        <h3>Never freeze on "I need to think about it" again</h3>
+        <ul>
+          <li>Naya's full objection framework, step by step</li>
+          <li>Word-for-word answers to the 15 objections you'll hear most</li>
+          <li>Practice drills to run with a friend or the community</li>
+        </ul>
+        <div class="acts"><button class="btn" data-add="Objection Vault ($97)">Yes, add it for $97</button><button class="linkbtn" data-skip="oto2">No thanks</button></div>
+      </div>
+    </article>
+    <p class="disclaimer">One click adds it to the card you just used. Sample page: nothing is charged.</p>
+  </div>
+</section>
+<footer class="legal wrap">© remotecloseher · Sample page prepared by Mavryk.</footer>
+
+<script src="sample.js"></script>
+<script>
+  if (/bump=1/.test(location.search)) { document.getElementById("bumpLine").hidden = false; document.getElementById("bumpItem").hidden = false; }
+  document.querySelectorAll("[data-add]").forEach(function (b) { b.addEventListener("click", function () { b.textContent = "Added to your order"; b.disabled = true; toast(b.getAttribute("data-add") + " added (sample, not charged)"); }); });
+  document.querySelectorAll("[data-skip]").forEach(function (b) { b.addEventListener("click", function () { document.getElementById(b.getAttribute("data-skip")).hidden = true; }); });
+</script>
+</body>
+</html>

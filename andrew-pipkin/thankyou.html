@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Seat Almost Saved</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Manrope:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="sample.css">
+<style>
+  .top { padding-block: 32px 48px; }
+  .vid16 { aspect-ratio: 16/9; }
+  .vid16 img { object-position: 50% 30%; filter: saturate(1.05); }
+  .vid-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 22px; background: linear-gradient(transparent, rgba(0,0,0,.85)); font-family: var(--display); font-weight: 800; font-size: clamp(16px, 2.4vw, 22px); }
+  .vid-cap small { display: block; font-family: var(--body); font-weight: 500; font-size: 13px; color: var(--muted); }
+  .steps { display: grid; gap: 14px; }
+  .step { display: grid; grid-template-columns: 48px 1fr; gap: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; align-items: start; }
+  .step .n { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 20px; background: var(--green); color: #03140a; }
+  .step.done .n { background: var(--panel-2); color: var(--green); border: 2px solid var(--green); }
+  .step p { margin: 4px 0 0; color: var(--muted); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
+  /* the email mock is drawn as an image of an inbox: fixed light colours by design */
+  .mail { background: #ffffff; color: #202124; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,.5); font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; }
+  .mail .chrome { background: #f1f3f4; padding: 10px 14px; display: flex; gap: 6px; align-items: center; }
+  .mail .chrome i { width: 10px; height: 10px; border-radius: 50%; background: #d0d4d8; display: block; }
+  .mail .head { padding: 16px 20px 10px; border-bottom: 1px solid #eceff1; }
+  .mail .subj { font-size: 19px; color: #202124; margin: 0 0 12px; }
+  .mail .from { display: flex; gap: 10px; align-items: center; }
+  .mail .from img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+  .mail .from b { color: #202124; }
+  .mail .from span { color: #5f6368; font-size: 12px; }
+  .mail .body { padding: 18px 20px 22px; }
+  .mail .body p { margin: 0 0 12px; }
+  .mail .cta { display: inline-block; background: #0e8a3d; color: #ffffff; font-weight: 700; padding: 12px 20px; border-radius: 8px; text-decoration: none; }
+  .mail .box { background: #f4f9f6; border: 1px solid #d6eadd; border-radius: 8px; padding: 12px 14px; margin: 12px 0; }
+  .offer { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; background: linear-gradient(135deg, #0f2318, var(--panel)); border: 2px dashed var(--amber); border-radius: 20px; padding: 28px; }
+  .offer ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); }
+  .price { font-family: var(--display); font-size: 44px; font-weight: 800; color: var(--amber); line-height: 1; }
+  .price s { font-size: 20px; color: var(--muted); }
+  @media (max-width: 820px) { .two, .offer { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="sample-bar"><b>SAMPLE</b> · Thank-you page built by Mavryk for Andrew Pipkin. Not a live page.</div>
+<header class="glow">
+  <div class="wrap top stack" style="gap:22px">
+    <div class="bar" aria-label="Registration 90% complete"><i style="width:90%"></i></div>
+    <p class="eyebrow">Step 2 of 2 · don't close this page</p>
+    <h1>Your seat is almost saved. Here's how to get the most out of our training on <span class="hl" data-event-date>Thursday</span></h1>
+    <div class="vid vid16">
+      <img src="img/andrew_phone.jpg" alt="Andrew Pipkin">
+      <div class="play"><i></i></div>
+      <div class="vid-cap">Watch this first: what to do before the class<small>2-minute message from Andrew</small></div>
+    </div>
+  </div>
+</header>
+<main>
+  <section>
+    <div class="wrap two">
+      <div class="stack" style="gap:18px">
+        <p class="eyebrow">Confirm your seat in 3 steps</p>
+        <div class="steps">
+          <div class="step done"><span class="n">✓</span><div><h3>You registered</h3><p>Your spot is on hold for the next 24 hours.</p></div></div>
+          <div class="step"><span class="n">1</span><div><h3>Open the email from Andrew Pipkin</h3><p>Subject line "You're in". Click <b>Yes, save my seat</b>. Check Promotions or Spam if it isn't there in 5 minutes, then drag it to your Primary inbox.</p></div></div>
+          <div class="step"><span class="n">2</span><div><h3>Add it to your calendar</h3><p><span data-event-short>Thursday</span>, 7:00 PM ET. Put it in your calendar now so nothing else takes the slot.</p></div></div>
+          <div class="step"><span class="n">3</span><div><h3>Join the free community</h3><p>Post your biggest question in the Scale Amazon FBA Community. Andrew answers the best ones live.</p></div></div>
+        </div>
+      </div>
+      <div class="stack" style="gap:18px">
+        <p class="eyebrow">This is the email you'll get</p>
+        <div class="mail" role="img" aria-label="Preview of the confirmation email from Andrew Pipkin">
+          <div class="chrome"><i></i><i></i><i></i></div>
+          <div class="head">
+            <p class="subj">You're in: Brand-Name Blueprint, <span data-event-short>Thursday</span> 7pm ET</p>
+            <div class="from"><img src="img/andrew_avatar.jpg" alt=""><div><b>Andrew Pipkin</b> <span>&lt;andrew@pipkinresellcoaching.com&gt;</span><br><span>to me</span></div></div>
+          </div>
+          <div class="body">
+            <p>Hey [First name],</p>
+            <p>You're registered for my free live masterclass. One quick thing so I know you're coming:</p>
+            <p><a class="cta" href="#">Yes, save my seat</a></p>
+            <div class="box"><b>When:</b> <span data-event-date>Thursday</span>, 7:00 PM ET<br><b>Where:</b> your private link arrives the morning of the class<br><b>Bring:</b> a notebook and your #1 question</div>
+            <p>Your free gift, my Sourcing Checklist, is attached. Go through it before Thursday and you'll get twice as much out of the class.</p>
+            <p>See you there,<br>Andrew</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:0">
+    <div class="wrap offer">
+      <div>
+        <p class="eyebrow" style="color:var(--amber)">One-time offer · only on this page</p>
+        <h2 style="margin-top:8px">Want a head start? The First Profitable Product Sprint</h2>
+        <p class="muted" style="margin:10px 0 0">A self-paced, 14-day mini course that gets you to your first product idea before the class.</p>
+        <ul><li>Video walkthrough: setting up SmartScout and Keepa</li><li>The ungating starter list</li><li>Andrew's buy / don't-buy scorecard</li><li>14 short daily tasks that fit around a 9 to 5</li></ul>
+      </div>
+      <div class="stack" style="align-items:center;text-align:center">
+        <div class="price">$47</div>
+        <button class="btn" type="button" data-open="buy">Add the Sprint</button>
+        <span class="muted" style="font-size:13px">No thanks, I'll just attend</span>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="wrap disclaimer">Pipkin LLC provides educational training for Amazon sellers. Results vary widely based on individual effort, financial resources, and market conditions. Not a promise or guarantee of earnings.</footer>
+<div class="modal" id="buy" hidden role="dialog" aria-modal="true" aria-labelledby="buyT"><div class="box stack"><button class="x" data-close aria-label="Close">×</button><h3 id="buyT">Sample checkout</h3><p class="muted" style="margin:0">On the live page this opens a Stripe checkout for $47, with the course delivered inside Skool.</p><button class="btn" data-close>Got it</button></div></div>
+<script src="sample.js"></script>
+</body>
+</html>

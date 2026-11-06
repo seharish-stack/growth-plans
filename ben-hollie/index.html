@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ben &amp; Hollie: Growth Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --ink:#14213d; --muted:#55607a; --line:#e3e6ee; --bg:#f7f6f2; --card:#ffffff;
+  --navy:#0f1f4b; --blue:#2f5bea; --blue-soft:#e8eeff; --sand:#f1ebe0; --green:#1f8a5b; --green-soft:#e3f4ec; --amber:#b7791f; --amber-soft:#fbf1df;
+  --display:'Fraunces',Georgia,serif; --body:'Inter',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.15;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1{font-size:clamp(34px,5.6vw,54px)}
+h2{font-size:clamp(28px,4vw,38px)}
+h3{font-size:21px}
+p{margin:0}
+.eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+section{padding:64px 0;border-top:1px solid var(--line)}
+section .head{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.lede{color:var(--muted);max-width:66ch}
+.stack{display:flex;flex-direction:column;gap:16px}
+
+/* top */
+.top{background:var(--navy);color:#fff;font-size:13px;letter-spacing:.06em;text-align:center;padding:9px 16px}
+.hero{padding:72px 0 56px;border-top:0}
+.hero .note{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 26px 22px;margin-top:30px;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 30px rgba(15,31,75,.06)}
+.hero .note p{font-size:17.5px}
+.sig{font-family:var(--display);font-style:italic;font-size:20px;color:var(--navy)}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.toc a{font-size:14px;color:var(--navy);text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px}
+.toc a:hover{border-color:var(--blue)}
+
+/* cards */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.card p{color:var(--muted);font-size:15.5px}
+.card b.big{font-family:var(--display);font-size:30px;line-height:1.1;color:var(--navy)}
+.tag{align-self:flex-start;font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 10px;background:var(--blue-soft);color:var(--blue)}
+.tag.g{background:var(--green-soft);color:var(--green)}
+.tag.a{background:var(--amber-soft);color:var(--amber)}
+
+/* flow */
+.flow{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+.step{flex:1 1 130px;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:2px;font-size:14.5px;min-width:0}
+.step b{font-size:16px}
+.step span{color:var(--muted)}
+.step.gap{border:2px dashed var(--amber);background:var(--amber-soft)}
+.step.new{border-color:var(--blue);background:var(--blue-soft)}
+.arrow{align-self:center;color:var(--muted);font-size:20px}
+
+.callout{background:var(--navy);color:#fff;border-radius:16px;padding:24px 26px;font-family:var(--display);font-size:clamp(20px,2.6vw,25px);line-height:1.35}
+.callout em{color:#a9bdff;font-style:italic}
+
+/* lists */
+ul.clean{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+ul.clean li::marker{color:var(--blue)}
+ol.run{margin:0;padding:0;list-style:none;counter-reset:r;display:flex;flex-direction:column;gap:12px}
+ol.run li{counter-increment:r;display:grid;grid-template-columns:44px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+ol.run li::before{content:counter(r,decimal-leading-zero);font-family:var(--display);font-weight:700;font-size:26px;color:var(--blue);line-height:1}
+ol.run li b{display:block;margin-bottom:2px}
+ol.run li span{color:var(--muted);font-size:15.5px}
+
+/* ad mocks */
+.ad{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.ad .vis{aspect-ratio:4/5;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;padding:18px;color:#fff;background:linear-gradient(160deg,#2f5bea,#0f1f4b)}
+.ad .vis.b{background:linear-gradient(160deg,#1f8a5b,#0f2f24)}
+.ad .vis.c{background:linear-gradient(160deg,#b7791f,#3d2608)}
+.ad .vis small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:600}
+.ad .vis b{font-family:var(--display);font-size:24px;line-height:1.1}
+.ad .cap{padding:14px 16px;font-size:14.5px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.ad .cap b{color:var(--ink)}
+
+/* table */
+.tablewrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right;white-space:nowrap}
+tr.total td{font-weight:700;background:var(--blue-soft)}
+.fine{font-size:13.5px;color:var(--muted)}
+
+/* email list */
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+details+details{margin-top:10px}
+summary{cursor:pointer;font-weight:600}
+details p,details ul{margin-top:10px;color:var(--muted);font-size:15.5px}
+
+.timeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.close{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 26px;display:flex;flex-direction:column;gap:14px}
+.btn{display:inline-flex;align-self:flex-start;align-items:center;gap:8px;background:var(--blue);color:#fff;text-decoration:none;font-weight:600;padding:14px 24px;border-radius:999px}
+.btn:hover{filter:brightness(1.08)}
+.btn:focus-visible,.toc a:focus-visible{outline:3px solid var(--navy);outline-offset:3px}
+footer{padding:36px 0 60px;text-align:center;font-size:13px;color:var(--muted)}
+
+@media (max-width:760px){
+  .grid2,.grid3,.timeline{grid-template-columns:1fr}
+  .arrow{display:none}
+  .step{flex-basis:100%}
+  section{padding:48px 0}
+}
+</style>
+</head>
+<body>
+<div class="top">Prepared for Ben &amp; Hollie, The Airbnb Couple · November 2026</div>
+
+<main class="wrap">
+
+<section class="hero">
+  <p class="eyebrow">A growth plan, not a pitch</p>
+  <h1>How I'd turn your VSL into a booked-call engine with a live masterclass and ads</h1>
+  <div class="note">
+    <p>Hey Ben and Hollie,</p>
+    <p>After our chat (two years of coaching, UK roots, Dubai now, I can see why) I went properly through everything: your Instagram, the VSL page, your website, your Trustpilot, the podcast, and the ads you ran over the winter.</p>
+    <p>You've built something real. Six years running your own portfolio, Channel 4, over 100 people helped, and a VSL page that's honestly better than most I see. So this isn't a "you're doing it wrong" page. It's what I'd do next if it were my business, written out in full so you can run it yourselves.</p>
+    <p>I've got nothing to sell you here. Take it, use it, ignore the bits that don't fit. If you ever want a hand with it, I'm around.</p>
+    <p class="sig">Sehar</p>
+  </div>
+  <nav class="toc" aria-label="Sections">
+    <a href="#built">What you've built</a>
+    <a href="#noticed">What I noticed</a>
+    <a href="#plan">The plan</a>
+    <a href="#class">The masterclass</a>
+    <a href="#funnel">The pages</a>
+    <a href="#ads">The ads</a>
+    <a href="#follow">Follow-up</a>
+    <a href="#numbers">The numbers</a>
+    <a href="#quick">Quick wins</a>
+    <a href="#roll">90-day roll-out</a>
+  </nav>
+</section>
+
+<section id="built">
+  <div class="head">
+    <p class="eyebrow">01 · What you've already got</p>
+    <h2>Most coaches would kill for this much proof</h2>
+    <p class="lede">The hard part of selling a mentorship is trust. You've already done that work. The plan below is mostly about putting this proof in front of more of the right people, more often.</p>
+  </div>
+  <div class="grid3">
+    <div class="card"><b class="big">6 years</b><p>Running your own rent-to-rent portfolio, through every market change. You still do it, so you teach what works now.</p></div>
+    <div class="card"><b class="big">Channel 4</b><p>Four in a Bed, likely the first rent-to-rent operators on the show. That's a headline most people in your space can't use.</p></div>
+    <div class="card"><b class="big">100+</b><p>People helped start in Airbnb, with named wins: Lisa, Rav and Mohini, Helen and Dave, Michelle, Anna, Samar, Jake, Urwah.</p></div>
+    <div class="card"><b class="big">£500k</b><p>What your own Airbnbs generated, as you say at the start of your VSL. Proof that you're operators, not just teachers.</p></div>
+    <div class="card"><b class="big">1-1 + WhatsApp</b><p>Unlimited strategy calls and direct access until the first property is secured. A strong, easy-to-explain offer.</p></div>
+    <div class="card"><b class="big">A podcast</b><p>Proper Property Podcast, plus a clear "Start Here" path on Instagram and a clean, honest VSL page with a 60-second qualifier.</p></div>
+  </div>
+</section>
+
+<section id="noticed">
+  <div class="head">
+    <p class="eyebrow">02 · What I noticed</p>
+    <h2>The gap is the step between the scroll and the sales call</h2>
+    <p class="lede">Here's how a stranger becomes a client today, from what I could see from the outside.</p>
+  </div>
+  <div class="flow" aria-label="Current journey">
+    <div class="step"><b>Sees a reel</b><span>Organic or a winter ad</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><b>DMs "START"</b><span>Or taps the link in bio</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><b>Watches the VSL</b><span>Short video on the call page</span></div>
+    <div class="arrow">→</div>
+    <div class="step gap"><b>Asked to book a call</b><span>Straight away, cold</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><b>Call with Ben</b><span>Close or lose</span></div>
+  </div>
+
+  <div class="stack" style="margin-top:22px">
+    <div class="grid2">
+      <div class="card">
+        <span class="tag a">1 · The ads built followers, not buyers</span>
+        <p>The Ad Library shows a big push between October 2025 and March 2026 (around 620 ads matched "Ben &amp; Hollie Academy"). Almost all of them asked people to follow the page or DM a word like SIXTY, READY or Airbnb. That grows an audience and a DM inbox, but it never gives a cold viewer a reason to commit an hour of their attention. All of those ads are now switched off.</p>
+      </div>
+      <div class="card">
+        <span class="tag a">2 · It's a big decision with one short step before the call</span>
+        <p>Rent-to-rent asks people to believe four things before they'll pay: it's legal, landlords will say yes, the numbers work, and they can do it alongside a job. Your FAQ answers exactly these, which tells me they come up on calls. A short VSL can't move someone through all four, so you're probably doing a lot of the convincing on the call itself.</p>
+      </div>
+      <div class="card">
+        <span class="tag a">3 · Everyone who doesn't book is lost</span>
+        <p>The VSL page goes from video to booking form. There's no email capture, so anyone who watches and isn't ready today (most people, for a decision this size) leaves without you being able to follow up. Every one of those is a warm lead you've already paid or worked for.</p>
+      </div>
+      <div class="card">
+        <span class="tag a">4 · The growth depends on the two of you posting</span>
+        <p>8.6k followers and 204 posts is a solid, engaged base, but it means new calls come in roughly in line with how much you post and reply in DMs. The moment you take a week off (or move countries), the calendar feels it.</p>
+      </div>
+    </div>
+    <div class="callout">You don't have a proof problem or an offer problem. You have a <em>"where do warm-but-not-ready people go?"</em> problem. A live masterclass answers it.</div>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="head">
+    <p class="eyebrow">03 · The plan in one picture</p>
+    <h2>Add one step: a live masterclass, fed by ads, that books the calls for you</h2>
+    <p class="lede">Keep everything you have. Point paid traffic at a masterclass instead of a follow, capture every email, and let the class do the convincing so your calls are with people who already believe it works.</p>
+  </div>
+  <div class="flow" aria-label="New journey">
+    <div class="step new"><b>Ad</b><span>Channel 4 and student-win angles</span></div>
+    <div class="arrow">→</div>
+    <div class="step new"><b>Register</b><span>£17 seat (or free, see below)</span></div>
+    <div class="arrow">→</div>
+    <div class="step new"><b>Reminders</b><span>Email + WhatsApp/SMS</span></div>
+    <div class="arrow">→</div>
+    <div class="step new"><b>Live class</b><span>75 minutes with you both</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><b>Your 60-sec qualifier</b><span>Then a call with Ben</span></div>
+  </div>
+
+  <div class="grid2" style="margin-top:22px">
+    <div class="card">
+      <span class="tag">My pick: a £17 paid live workshop</span>
+      <p>For a model where "do I need money to start?" is a real question, a small price is a useful filter. People who pay £17 turn up far more often than people who registered for free, they arrive more committed, and the ticket sales plus an order bump can cover a big share of the ad spend. Your calls get fewer tyre-kickers.</p>
+    </div>
+    <div class="card">
+      <span class="tag g">The free version, if you'd rather</span>
+      <p>A free class gets more registrations for the same budget and suits a wider audience. Show-up rates are lower, so it needs stronger reminders. My suggestion: launch paid, and test a free version for two weeks once the paid one is running, then keep whichever books more qualified calls per pound spent.</p>
+    </div>
+  </div>
+</section>
+
+<section id="class">
+  <div class="head">
+    <p class="eyebrow">04 · The masterclass</p>
+    <h2>"Your First Airbnb Without Owning Property"</h2>
+    <p class="lede">A live 75-minute workshop with both of you, weekly at first (say Wednesday 7pm UK), then run from a recording on a schedule once it's dialled in. Every segment answers one of the four beliefs people need before they'll get on a call.</p>
+  </div>
+  <ol class="run">
+    <li><div><b>How rent-to-rent actually works (and why it's legal)</b><span>The landlord gets guaranteed rent and no voids, you run it as serviced accommodation. Your Channel 4 story is the perfect open: "the property on TV? We don't own it." (10 min)</span></div></li>
+    <li><div><b>Choosing a location that books</b><span>How you pick an area, what demand looks like, and why some areas are saturated and others aren't. Share your screen and show one real area check. (12 min)</span></div></li>
+    <li><div><b>The landlord conversation, live</b><span>Ben plays the landlord, Hollie pitches. Show the exact words that get a yes, and how to handle "is this sublet?" This is the bit people will remember. (15 min)</span></div></li>
+    <li><div><b>One real deal, every number on screen</b><span>Rent, set-up costs, cleaning, platform fees, nightly rate, occupancy, profit. You already post deal breakdowns, so this is a longer version. It answers "do the numbers work?" (13 min)</span></div></li>
+    <li><div><b>Doing it alongside a job</b><span>Rav and Mohini on 12-hour shifts, Lisa leaving corporate in six months, Helen and Dave at 20 minutes a day. Short clips or screenshots, then the 60-day plan. (10 min)</span></div></li>
+    <li><div><b>The invitation and live Q&amp;A</b><span>Explain the mentorship (unlimited 1-1, WhatsApp, in your corner until the first property) and invite anyone serious to take the 60-second qualifier and book a call. Then answer questions live. (15 min)</span></div></li>
+  </ol>
+</section>
+
+<section id="funnel">
+  <div class="head">
+    <p class="eyebrow">05 · The pages</p>
+    <h2>Four simple pages, built on the Perspective funnel you already use</h2>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag">Page 1 · Registration</span>
+      <p><b>Headline:</b> "We Built a £20k/Month Airbnb Business Without Owning a Single Property. Join Us Live and We'll Show You How."</p>
+      <ul class="clean">
+        <li>Channel 4 and Trustpilot badges at the top, like your VSL page</li>
+        <li>Date, time, countdown, "75 minutes, live, replay for 48 hours"</li>
+        <li>The five things they'll learn (the segments above)</li>
+        <li>Three student wins with photos</li>
+        <li>£17 seat, plus a £9 order bump: "The Landlord Script Pack" (your exact messages and call script)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Page 2 · Thank-you</span>
+      <ul class="clean">
+        <li>A 60-second video from you both: "You're in, here's how to get the most out of it"</li>
+        <li>Add-to-calendar buttons and a WhatsApp reminder opt-in</li>
+        <li>Your existing VSL embedded as "watch this before the class"</li>
+        <li>A fast lane for the ready ones: "Already sure? Take the 60-second qualifier and book a call now"</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Page 3 · Live room and replay</span>
+      <ul class="clean">
+        <li>Zoom or a streaming page for the live class</li>
+        <li>Replay page up for 48 hours with the qualifier button under the video</li>
+        <li>Timestamps for each segment, so people can jump to the deal breakdown</li>
+        <li>Short FAQ (your existing one is great, reuse it)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">Page 4 · Your current VSL page, upgraded</span>
+      <ul class="clean">
+        <li>Keep it exactly as it is for warm traffic from your posts</li>
+        <li>Add an email box above the video: "Get the training and the deal breakdown sent to you"</li>
+        <li>Add a second button for people not ready to book: "Not sure yet? Join the next live class"</li>
+        <li>Make sure the Meta pixel is firing on every page so you can retarget</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="ads">
+  <div class="head">
+    <p class="eyebrow">06 · The ads</p>
+    <h2>Same faces, same proof, one new call to action</h2>
+    <p class="lede">Your winter ads were good creative pointed at the wrong goal. Most of them can be re-cut with a new ending: "Join our live workshop on Wednesday, link below." Below are the angles I'd test first, with the hook for each.</p>
+  </div>
+  <div class="grid3">
+    <div class="ad"><div class="vis"><small>Angle 1 · Channel 4</small><b>"The property on Channel 4? We don't even own it."</b></div><div class="cap"><b>Talking head, 30 to 45 sec</b>Re-use your Four in a Bed clip, end on the live class. Your strongest scroll-stopper.</div></div>
+    <div class="ad"><div class="vis b"><small>Angle 2 · Student win</small><b>"Two doctors. 12-hour shifts. Two Airbnbs in 90 days."</b></div><div class="cap"><b>Testimonial cut, 30 sec</b>Rav and Mohini. Proves "alongside a job" better than anything you can say.</div></div>
+    <div class="ad"><div class="vis c"><small>Angle 3 · Deal breakdown</small><b>"One property. Real numbers. Here's what it costs and what it makes."</b></div><div class="cap"><b>Carousel, 6 to 8 slides</b>You already post these. Last slide: "We'll walk through a full deal live on Wednesday."</div></div>
+    <div class="ad"><div class="vis"><small>Angle 4 · The objection</small><b>"Isn't rent-to-rent just subletting? Here's the honest answer."</b></div><div class="cap"><b>Talking head, 45 sec</b>Name the doubt people have before they'll ever book a call.</div></div>
+    <div class="ad"><div class="vis b"><small>Angle 5 · First month</small><b>"Samar made £1,000 profit in her first month."</b></div><div class="cap"><b>Static or short reel</b>Your pinned post, re-cut as an ad with the class as the call to action.</div></div>
+    <div class="ad"><div class="vis c"><small>Angle 6 · The couple story</small><b>"Two stressed 9-to-5ers to a business that runs without us."</b></div><div class="cap"><b>Talking head, 60 sec</b>Your "READY" ad with a new ending. Story ads warm people up for the long video.</div></div>
+  </div>
+
+  <div class="grid2" style="margin-top:18px">
+    <div class="card">
+      <span class="tag">Who sees them</span>
+      <ul class="clean">
+        <li><b>Cold, UK:</b> 25 to 50, interests around Airbnb hosting, property investing, side income and financial freedom. Broad targeting with strong creative usually wins here.</li>
+        <li><b>Warm:</b> everyone who engaged with your Instagram in the last 365 days, watched 50% of a reel, or visited the VSL page. Usually the cheapest seats you'll ever buy.</li>
+        <li><b>Lookalikes:</b> built from your past students and booked calls once the pixel has data.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">How to run it</span>
+      <ul class="clean">
+        <li>Start at around £100 a day: one campaign for cold, one for warm.</li>
+        <li>Optimise for the purchase (the £17 seat), not for link clicks or follows.</li>
+        <li>Launch 6 to 9 ads, kill the weakest weekly, and make two new ones every week.</li>
+        <li>Scale the winners by about 20% every few days while cost per seat holds.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="follow">
+  <div class="head">
+    <p class="eyebrow">07 · Follow-up</p>
+    <h2>The emails and messages that make people turn up and book</h2>
+    <p class="lede">Most of the money in a masterclass is made in the follow-up. These run automatically from your email tool and WhatsApp or SMS.</p>
+  </div>
+  <details open><summary>Before the class: 4 emails + 2 messages</summary>
+    <ul class="clean">
+      <li><b>Straight away:</b> "You're in" with the link, calendar buttons and your VSL as homework.</li>
+      <li><b>Day before:</b> "The deal we'll break down tomorrow" (a teaser of the numbers).</li>
+      <li><b>Morning of:</b> Hollie's short story: "The landlord who said no three times."</li>
+      <li><b>1 hour before + 10 minutes before:</b> short reminder email and WhatsApp/SMS with the link.</li>
+    </ul>
+  </details>
+  <details><summary>After the class: 5 emails over 7 days</summary>
+    <ul class="clean">
+      <li><b>Replay is up</b> (48 hours), with timestamps and the qualifier link.</li>
+      <li><b>The four objections</b> answered one by one: legal, landlords, money, time.</li>
+      <li><b>A student story</b> each day for three days (Lisa, Anna, Rav and Mohini).</li>
+      <li><b>Replay closing:</b> last chance, with a clear "book your call" button.</li>
+    </ul>
+  </details>
+  <details><summary>No-shows: 2 emails + 1 message</summary>
+    <p>"We missed you, here's the replay", then a short WhatsApp from Ben: "Did you get a chance to watch the deal breakdown? Any questions?" Personal, one line, no pressure.</p>
+  </details>
+  <details><summary>Before every sales call: show-up sequence</summary>
+    <ul class="clean">
+      <li>Confirmation with a 3-minute "what we'll cover on the call" video from Ben.</li>
+      <li>Reminders 24 hours and 1 hour before, by email and WhatsApp.</li>
+      <li>A short "case study to watch before we speak" so they arrive already sold on the model.</li>
+    </ul>
+  </details>
+</section>
+
+<section id="numbers">
+  <div class="head">
+    <p class="eyebrow">08 · The numbers</p>
+    <h2>What a month could look like at £3,000 of ad spend</h2>
+    <p class="lede">These are illustrative, not promises. The assumptions are typical for paid workshops in coaching, and I've used a placeholder programme price because I don't know yours. Swap in your real numbers and the model still holds.</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Step</th><th>Assumption</th><th class="r">Per month</th></tr></thead>
+      <tbody>
+        <tr><td>Ad spend</td><td>About £100 a day</td><td class="r">£3,000</td></tr>
+        <tr><td>Workshop seats sold</td><td>£20 cost per £17 seat</td><td class="r">150</td></tr>
+        <tr><td>Ticket and bump income</td><td>£17 seat, 30% take the £9 script pack</td><td class="r">£2,955</td></tr>
+        <tr><td>Attend live or watch replay</td><td>55% of buyers</td><td class="r">83</td></tr>
+        <tr><td>Take the qualifier and book</td><td>20% of attendees</td><td class="r">17</td></tr>
+        <tr><td>Calls that happen</td><td>75% show-up</td><td class="r">13</td></tr>
+        <tr><td>New mentees</td><td>30% close on warm calls</td><td class="r">4</td></tr>
+        <tr class="total"><td>New programme revenue</td><td>4 × [your programme price]. At £3,500 that's:</td><td class="r">£14,000</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="fine" style="margin-top:10px">Ticket income covers almost all of the ad spend in this model, so the mentorship sales are close to pure margin. The three numbers that move it most are cost per seat (creative), attendance (reminders), and call bookings (the invitation in the class). On top of this, every non-buyer joins your email list, and they keep buying calls for months.</p>
+</section>
+
+<section id="quick">
+  <div class="head">
+    <p class="eyebrow">09 · Quick wins this week</p>
+    <h2>Five things you could do before building anything</h2>
+  </div>
+  <ol class="run">
+    <li><div><b>Add an email capture to the VSL page</b><span>Even just "Send me the training and the deal breakdown". Start building the list today.</span></div></li>
+    <li><div><b>Check your Meta pixel</b><span>Make sure it fires on the VSL page, the qualifier and the booking confirmation, so the ads have data to learn from.</span></div></li>
+    <li><div><b>Retarget VSL viewers</b><span>A small always-on budget (£10 to £20 a day) showing student wins to people who watched but didn't book.</span></div></li>
+    <li><div><b>Ask for Trustpilot reviews</b><span>8 reviews undersells 100+ people helped. A personal ask to your last 30 mentees could triple it in a fortnight, and it makes every ad work harder.</span></div></li>
+    <li><div><b>Turn the winter ads back on, with a new ending</b><span>Your best performers already exist. Re-cut the last five seconds to point at the VSL page while the masterclass is being built.</span></div></li>
+  </ol>
+</section>
+
+<section id="roll">
+  <div class="head">
+    <p class="eyebrow">10 · The roll-out</p>
+    <h2>90 days from here</h2>
+  </div>
+  <div class="timeline">
+    <div class="card"><span class="tag">Days 1 to 30 · Build and launch</span><ul class="clean"><li>Quick wins live</li><li>Workshop slides and run-of-show</li><li>Four pages, email and WhatsApp sequences</li><li>First 6 to 9 ads</li><li>First two live classes</li></ul></div>
+    <div class="card"><span class="tag">Days 31 to 60 · Tighten</span><ul class="clean"><li>Weekly look at cost per seat, attendance and bookings</li><li>New ads every week from class clips and student wins</li><li>Test the free version against the paid one</li><li>Sharpen the invitation segment</li></ul></div>
+    <div class="card"><span class="tag">Days 61 to 90 · Scale</span><ul class="clean"><li>Raise budget on the winning ads</li><li>Move to an evergreen schedule if you want your evenings back</li><li>Lookalikes from your new mentees</li><li>Weekly scorecard so you always know the numbers</li></ul></div>
+  </div>
+</section>
+
+<section>
+  <div class="close">
+    <p class="eyebrow">That's everything</p>
+    <h2>Use it however you like</h2>
+    <p>Honestly, you could run all of this yourselves. You have the proof, the content and the offer. If you'd ever like a hand building or running it, this is exactly what my team and I do at Mavryk, and I'd love to help. If not, no worries at all. It was genuinely fun digging into your business.</p>
+    <p>Either way, just reply to me on Instagram. I'd love to hear what you think.</p>
+    <a class="btn" href="https://www.instagram.com/sehar_mavryk/" target="_blank" rel="noopener">Message me on Instagram →</a>
+    <p class="sig">Sehar, Mavryk</p>
+  </div>
+</section>
+
+</main>
+<footer>Prepared by Sehar at Mavryk for Ben &amp; Hollie, November 2026. Figures in "The numbers" are illustrative estimates, not guarantees. Ad Library details checked on 6 November 2026.</footer>
+</body>
+</html>

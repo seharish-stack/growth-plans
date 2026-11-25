@@ -84,6 +84,21 @@ section{display:flex;flex-direction:column;gap:28px}
 .fstep.end{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 .fstep.end span{color:var(--bg);opacity:.8}
 
+#recommendation .funnel{display:flex;flex-wrap:nowrap;gap:0;align-items:stretch;padding-top:12px}
+#recommendation .fstep{flex:1 1 0}
+.fgroup{flex:2.3 1 0;min-width:0;display:flex;align-items:stretch;border:2px dashed var(--red);border-radius:16px;padding:22px 10px 10px;position:relative}
+.fglab{position:absolute;top:-11px;left:50%;transform:translateX(-50%);margin:0;background:var(--bg);padding:0 10px;font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);white-space:nowrap}
+.farr{flex:0 0 28px;align-self:center;height:2px;background:var(--muted);position:relative;margin:0 4px 0 2px}
+.farr::after{content:"";position:absolute;right:-6px;top:-5px;border-left:8px solid var(--muted);border-top:6px solid transparent;border-bottom:6px solid transparent}
+@media (max-width:760px){
+  #recommendation .funnel,.fgroup{flex-direction:column}
+  #recommendation .fstep,.fgroup{flex:none}
+  .fgroup{padding:24px 12px 12px}
+  .farr:has(+ .fgroup){margin-bottom:18px}
+  .farr{flex:0 0 26px;width:2px;height:26px;margin:2px 0 8px}
+  .farr::after{right:auto;left:-5px;top:auto;bottom:-6px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--muted);border-bottom:0}
+}
+
 /* Numbers */
 .nums{background:#1d1d1f;color:#f3f1ec;border-radius:18px;padding:40px max(20px,4vw);display:flex;flex-direction:column;gap:28px}
 .nums h2{color:#f3f1ec}
@@ -314,6 +329,20 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:10px 0}
 .done .ok{width:64px;height:64px;border-radius:50%;background:#3f5566;position:relative}
 .done .ok::after{content:"";position:absolute;left:21px;top:14px;width:16px;height:28px;border-right:5px solid #fff;border-bottom:5px solid #fff;transform:rotate(45deg)}
+.mfbox .mfphone{display:grid;grid-template-columns:minmax(0,118px) minmax(0,1fr);gap:8px}
+.mfbox .mfphone select{padding-left:10px;padding-right:6px}
+.mfco{display:flex;flex-direction:column;gap:8px;background:#faf9f6;border:1.5px solid #e3ded5;border-radius:12px;padding:14px 16px}
+.mfco small{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#b4562a}
+.mfco .r{display:flex;justify-content:space-between;gap:12px;font-size:15px}
+.mfco .r b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.mfco .t{border-top:1px solid #e3ded5;padding-top:8px;font-family:'Oswald',sans-serif;font-weight:700;font-size:17px}
+.mfco .t b{color:#b4562a}
+.mfsec{text-align:center;font-size:13px!important;color:#5f6268}
+.mfbox button.pbtn[type=submit]{width:100%;margin-top:4px}
+.tgrid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tgrid2 .ph-box,.tgrid2 .ph-box.v{aspect-ratio:auto;min-height:170px}
+@media (max-width:640px){.tgrid2{grid-template-columns:1fr}}
+.done[hidden],.slots[hidden],#mf [hidden]{display:none!important}
 .slots{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
 .slots button{all:unset;cursor:pointer;border:1.5px solid #d7d3cc;border-radius:10px;padding:10px;text-align:center;font-weight:600;font-size:14px}
 .slots button.sel{background:#1d1d1f;color:#fff;border-color:#1d1d1f}
@@ -668,9 +697,15 @@ h1{font-size:clamp(32px,5.2vw,56px)}
   </div>
   <div class="funnel">
     <div class="fstep"><b>Audience + ads</b><span>Instagram 100k, plus Meta ads</span></div>
-    <div class="fstep new"><b>Free masterclass</b><span>Beyond Survival, 60 minutes, live + replay</span></div>
-    <div class="fstep"><b>Your course</b><span>offered on the thank-you page at [$47]</span></div>
+    <span class="farr" aria-hidden="true"></span>
+    <div class="fgroup"><p class="fglab">The new middle</p>
+      <div class="fstep new"><b>Free masterclass</b><span>Beyond Survival, 60 minutes, live + replay</span></div>
+      <span class="farr" aria-hidden="true"></span>
+      <div class="fstep"><b>Your course</b><span>offered on the thank-you page at [$47]</span></div>
+    </div>
+    <span class="farr" aria-hidden="true"></span>
     <div class="fstep new"><b>Application</b><span>on the replay page, then the call</span></div>
+    <span class="farr" aria-hidden="true"></span>
     <div class="fstep end"><b>Reforged</b><span>calls with men ready to start</span></div>
   </div>
   <div class="impl">
@@ -882,9 +917,10 @@ h1{font-size:clamp(32px,5.2vw,56px)}
     </div>
     <div class="ps">
       <h3>What men say</h3>
-      <div class="pgrid3">
+      <div class="tgrid2">
         <div class="ph-box">[Client win from your Instagram]</div>
         <div class="ph-box">[Testimonial from a Reforged member]</div>
+        <div class="ph-box">[Client win from your Instagram]</div>
         <div class="ph-box v">[Video testimonial from a Reforged member]</div>
       </div>
     </div>
@@ -1186,14 +1222,21 @@ h1{font-size:clamp(32px,5.2vw,56px)}
     <form id="mfForm" style="display:flex;flex-direction:column;gap:14px">
       <h3 id="mfTitle">Save your seat</h3>
       <p id="mfSub">Beyond Survival · Live, 60 minutes · Free</p>
+      <div class="mfco" id="mfCo" hidden style="display:none">
+        <small>Order summary</small>
+        <div class="r"><span>[Your course name]: full self-paced course</span><b>[$47]</b></div>
+        <div class="r t"><span>Total today</span><b>[$47]</b></div>
+      </div>
       <label>First name<input name="n" required autocomplete="given-name"></label>
-      <label>Email<input name="e" type="email" required autocomplete="email"></label>
+      <label>Email address<input name="e" type="email" required autocomplete="email"></label>
+      <label id="mfPhone">Phone number<span class="mfphone"><select name="cc" aria-label="Country code"><option value="+1" selected>+1 US/CA</option><option value="+44">+44 UK</option><option value="+61">+61 AU</option><option value="+64">+64 NZ</option><option value="+353">+353 IE</option><option value="+27">+27 ZA</option><option value="+91">+91 IN</option><option value="+971">+971 UAE</option><option value="other">Other</option></select><input name="p" type="tel" autocomplete="tel-national" placeholder="(555) 123-4567"></span></label>
       <div id="mfApply" hidden style="display:flex;flex-direction:column;gap:14px">
         <label>What’s the main thing you want to change right now?<textarea name="q1"></textarea></label>
         <label>What have you already tried?<textarea name="q2"></textarea></label>
         <label>If it’s a fit, are you ready to start in the next 30 days?<select name="q3"><option>Yes</option><option>Maybe</option><option>Not yet</option></select></label>
       </div>
       <button class="pbtn" type="submit" id="mfBtn">Save my free seat</button>
+      <p class="mfsec" id="mfSec" hidden>Secure checkout. Card details are taken on the secure payment page.</p>
     </form>
     <div class="done" id="mfDone" hidden>
       <span class="ok"></span>
@@ -1267,7 +1310,7 @@ h1{font-size:clamp(32px,5.2vw,56px)}
       apply=document.getElementById('mfApply'),slots=document.getElementById('slots'),slotMsg=document.getElementById('slotMsg');
   var CFG={
     reg:{t:'Save your free seat',s:'Beyond Survival · Live, 60 minutes · Free',b:'Save my free seat',d:'Your seat is saved. Check your inbox and reply YES to confirm.'},
-    course:{t:'Add the course',s:'One-time payment of [$47] · Instant access',b:'Add it for [$47]',d:'Your course has been added. Your login link is on its way to your inbox.'},
+    course:{t:'Add the course',s:'One-time payment · Instant access',b:'Complete checkout · [$47]',d:'Your course has been added. Your login link is on its way to your inbox.'},
     apply:{t:'Apply for Reforged',s:'Two minutes. If it looks like a fit, you’ll pick a time for your call next.',b:'Submit my application',d:'Application received. Pick a time for your call about Reforged:'}
   };
   var cur='reg';
@@ -1275,6 +1318,9 @@ h1{font-size:clamp(32px,5.2vw,56px)}
     cur=kind;var c=CFG[kind];
     document.getElementById('mfTitle').textContent=c.t;document.getElementById('mfSub').textContent=c.s;document.getElementById('mfBtn').textContent=c.b;
     apply.hidden=kind!=='apply';apply.style.display=kind==='apply'?'flex':'none';
+    var co=document.getElementById('mfCo'),ph=document.getElementById('mfPhone'),sec=document.getElementById('mfSec');
+    co.hidden=kind!=='course';co.style.display=kind==='course'?'flex':'none';
+    ph.hidden=kind==='course';ph.style.display=kind==='course'?'none':'flex';sec.hidden=kind!=='course';
     form.hidden=false;form.style.display='flex';done.hidden=true;slots.hidden=true;slotMsg.hidden=true;
     slots.querySelectorAll('button').forEach(function(x){x.classList.remove('sel')});
     form.reset();mf.hidden=false;var f=form.querySelector('input');if(f)f.focus();

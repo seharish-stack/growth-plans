@@ -351,6 +351,13 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .vtab:hover{border-color:#8f601a}
 .vtab[aria-selected="true"]{background:#1e1a17;color:#fff;border-color:#1e1a17}
 .vtab:focus-visible{outline:3px solid #8f601a;outline-offset:2px}
+.vsec{display:flex;flex-wrap:wrap;gap:8px}
+.vsec .vtab{font-size:14px;padding:8px 16px}
+.vsec .vtab i{font-style:normal;opacity:.6;margin-left:6px}
+.secitem{display:flex;flex-direction:column;gap:10px}
+.seclabel{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#8f601a;padding:0 4px}
+.emstack{display:flex;flex-direction:column;gap:30px}
+.adp>.seclabel{margin-bottom:10px}
 .vnav{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .vnav button{all:unset;cursor:pointer;background:#fff;border:1px solid #e6ddd0;border-radius:999px;padding:9px 18px;font-weight:600;font-size:14.5px}
 .vnav button:hover{border-color:#8f601a}
@@ -918,10 +925,9 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="ovin">
   <div class="vw">
     <h2>Email sequences, written in your voice</h2>
-    <p class="note">Click any tab to switch emails. Items in [brackets] are merge fields or details for you to fill in.</p>
-    <div class="tgroups" id="emTabs" role="tablist" aria-label="Emails"></div>
-    <div class="vnav"><button type="button" id="emPrev">‹ Prev</button><span class="pos" id="emPos">1 / 12</span><button type="button" id="emNext">Next ›</button></div>
-    <article class="mail" id="emView" role="tabpanel" aria-live="polite"></article>
+    <p class="note">Click a section to see every email in it. Items in [brackets] are merge fields or details for you to fill in.</p>
+    <div class="tgroups"><div class="vsec" id="emTabs" role="tablist" aria-label="Email sections"></div></div>
+    <div class="emstack" id="emView" role="tabpanel" aria-live="polite"></div>
   </div>
   </div>
 </div>
@@ -932,13 +938,8 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="ovin">
   <div class="vw">
     <h2>Ad creatives for The Big Goals Masterclass</h2>
-    <p class="note">Click any tab to switch ads. No income or outcome promises, and nothing that singles out the person seeing the ad.</p>
-    <div class="tgroups" role="tablist" aria-label="Ads">
-      <div class="tg"><span>Static</span><button class="vtab adtab" role="tab" type="button">Static 1</button><button class="vtab adtab" role="tab" type="button">Static 2</button><button class="vtab adtab" role="tab" type="button">Static 3</button></div>
-      <div class="tg"><span>Video scripts</span><button class="vtab adtab" role="tab" type="button">Script 1</button><button class="vtab adtab" role="tab" type="button">Script 2</button><button class="vtab adtab" role="tab" type="button">Script 3</button></div>
-      <div class="tg"><span>Carousel</span><button class="vtab adtab" role="tab" type="button">Carousel</button></div>
-    </div>
-    <div class="vnav"><button type="button" id="adPrev">‹ Prev</button><span class="pos" id="adPos">1 / 7</span><button type="button" id="adNext">Next ›</button></div>
+    <p class="note">Click a format to see every ad in it. No income or outcome promises, and nothing that singles out the person seeing the ad.</p>
+    <div class="tgroups"><div class="vsec" id="adSecs" role="tablist" aria-label="Ad formats"></div></div>
 
     <div class="adp" role="tabpanel">
       <div class="adone">
@@ -1150,46 +1151,42 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
      b:'<p>Hi [first name],</p><p>So you know what to expect before we talk: coaching with me starts with your strengths and one big goal, then turns the goal science into a plan you can follow through on.</p><p class="phd">[Coaching format and length, plus a client quote from carolinemiller.com/clients, with name as given]</p><p>See you on the call,<br>Caroline</p>'}
   ];
   var AV=document.querySelector('.hero .who img').src;
-  var emTabs=document.getElementById('emTabs'),emView=document.getElementById('emView'),emPos=document.getElementById('emPos'),
-      emPrev=document.getElementById('emPrev'),emNext=document.getElementById('emNext'),emI=0,emBtns=[];
-  var groupsSeen={};
-  EM.forEach(function(e,idx){
-    var row=groupsSeen[e.g];
-    if(!row){row=document.createElement('div');row.className='tg';var l=document.createElement('span');l.textContent=e.g;row.appendChild(l);emTabs.appendChild(row);groupsSeen[e.g]=row}
-    var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');b.textContent=e.t;
-    b.addEventListener('click',function(){showEm(idx)});row.appendChild(b);emBtns.push(b);
-  });
+  var emTabs=document.getElementById('emTabs'),emView=document.getElementById('emView'),emSecs=[],emBtns=[];
+  EM.forEach(function(e,idx){var sc=emSecs.filter(function(x){return x.n===e.g})[0];if(!sc){sc={n:e.g,ix:[]};emSecs.push(sc)}sc.ix.push(idx)});
   function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
-  function showEm(n){
-    emI=Math.max(0,Math.min(EM.length-1,n));var e=EM[emI];
-    emView.innerHTML='<div class="subj">'+esc(e.s)+'<span>Inbox</span></div>'+
+  function mailHtml(e){
+    return '<div class="secitem"><div class="seclabel">'+esc(e.t)+'</div><article class="mail">'+
+      '<div class="subj">'+esc(e.s)+'<span>Inbox</span></div>'+
       '<div class="from"><img src="'+AV+'" alt=""><div><b>Caroline Adams Miller</b><small>to me · '+esc(e.g)+' sequence</small></div></div>'+
       '<dl><dt>From</dt><dd>Caroline Adams Miller</dd><dt>Subject</dt><dd>'+esc(e.s)+'</dd><dt>Preview</dt><dd>'+esc(e.p)+'</dd></dl>'+
-      '<div class="body">'+e.b+'<p class="fx">'+e.fx+'</p></div>';
-    emBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===emI?'true':'false')});
-    emPos.textContent=(emI+1)+' / '+EM.length+' · '+e.t;
-    emPrev.disabled=emI===0;emNext.disabled=emI===EM.length-1;
+      '<div class="body">'+e.b+'<p class="fx">'+e.fx+'</p></div></article></div>';
   }
-  emPrev.addEventListener('click',function(){showEm(emI-1)});
-  emNext.addEventListener('click',function(){showEm(emI+1)});
-  document.querySelectorAll('[data-email]').forEach(function(b){b.addEventListener('click',function(){showEm(parseInt(b.getAttribute('data-email'),10));openO('ov-emails')})});
-  showEm(0);
+  function showSec(k){
+    emView.innerHTML=emSecs[k].ix.map(function(i){return mailHtml(EM[i])}).join('');
+    emBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===k?'true':'false')});
+    var o=document.getElementById('ov-emails');if(o)o.scrollTop=0;
+  }
+  emSecs.forEach(function(sc,k){var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');
+    b.innerHTML=esc(sc.n)+'<i>'+sc.ix.length+'</i>';b.addEventListener('click',function(){showSec(k)});emTabs.appendChild(b);emBtns.push(b)});
+  function secOfEm(n){for(var k=0;k<emSecs.length;k++){if(emSecs[k].ix.indexOf(n)>=0)return k}return 0}
+  document.querySelectorAll('[data-email]').forEach(function(b){b.addEventListener('click',function(){openO('ov-emails');showSec(secOfEm(parseInt(b.getAttribute('data-email'),10)))})});
+  showSec(0);
 
   /* ===== Ad viewer ===== */
-  var adTabs=[].slice.call(document.querySelectorAll('.adtab')),adPanels=[].slice.call(document.querySelectorAll('.adp')),
-      adPos=document.getElementById('adPos'),adPrev=document.getElementById('adPrev'),adNext=document.getElementById('adNext'),adI=0;
-  function showAd(n){
-    adI=Math.max(0,Math.min(adPanels.length-1,n));
-    adPanels.forEach(function(p,j){p.hidden=j!==adI});
-    adTabs.forEach(function(t,j){t.setAttribute('aria-selected',j===adI?'true':'false')});
-    adPos.textContent=(adI+1)+' / '+adPanels.length+' · '+adTabs[adI].textContent;
-    adPrev.disabled=adI===0;adNext.disabled=adI===adPanels.length-1;
+  var adPanels=[].slice.call(document.querySelectorAll('.adp')),adSecs=document.getElementById('adSecs'),adBtns=[];
+  var ADG=[['Static',[['Static 1',0],['Static 2',1],['Static 3',2]]],['Video scripts',[['Script 1',3],['Script 2',4],['Script 3',5]]],['Carousel',[['Carousel',6]]]];
+  ADG.forEach(function(g){g[1].forEach(function(x){var l=document.createElement('div');l.className='seclabel';l.textContent=x[0];adPanels[x[1]].insertBefore(l,adPanels[x[1]].firstChild)})});
+  function showAg(k){
+    var ix=ADG[k][1].map(function(x){return x[1]});
+    adPanels.forEach(function(p,j){p.hidden=ix.indexOf(j)<0});
+    adBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===k?'true':'false')});
+    var o=document.getElementById('ov-ads');if(o)o.scrollTop=0;
   }
-  adTabs.forEach(function(t,j){t.addEventListener('click',function(){showAd(j)})});
-  adPrev.addEventListener('click',function(){showAd(adI-1)});
-  adNext.addEventListener('click',function(){showAd(adI+1)});
-  document.querySelectorAll('[data-ad]').forEach(function(b){b.addEventListener('click',function(){showAd(parseInt(b.getAttribute('data-ad'),10));openO('ov-ads')})});
-  showAd(0);
+  ADG.forEach(function(g,k){var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');
+    b.innerHTML=g[0]+'<i>'+g[1].length+'</i>';b.addEventListener('click',function(){showAg(k)});adSecs.appendChild(b);adBtns.push(b)});
+  function secOfAd(n){for(var k=0;k<ADG.length;k++){if(ADG[k][1].some(function(x){return x[1]===n}))return k}return 0}
+  document.querySelectorAll('[data-ad]').forEach(function(b){b.addEventListener('click',function(){openO('ov-ads');showAg(secOfAd(parseInt(b.getAttribute('data-ad'),10)))})});
+  showAg(0);
 
   /* Carousel */
   var car=document.getElementById('car'),track=document.getElementById('carTrack'),cnt=document.getElementById('carCnt'),

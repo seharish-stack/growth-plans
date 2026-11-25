@@ -363,6 +363,12 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .vp{display:flex;flex-direction:column;align-items:center}
 #emPanels{display:block}
 .vp[hidden]{display:none}
+/* Section tabs: one button per section, every item of that section stacked */
+.vsec{display:flex;gap:8px;flex-wrap:wrap}
+.vsec .vtab{font-size:14px;padding:8px 16px}
+.vsec .vtab i{font-style:normal;opacity:.65;margin-left:6px}
+.vw .vp{margin:0 0 30px}
+.seclabel{width:min(760px,100%);margin:10px auto 10px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6b5a52;text-align:center}
 .em-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(60,25,15,.08);max-width:760px;width:100%;align-self:center}
 .em-hdr{background:#f8f1ea;padding:16px 20px;display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:14.5px;margin:0}
 .em-hdr dt{color:#6b5a52}
@@ -640,7 +646,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="head">
     <p class="eyebrow">Email sequences</p>
     <h2>Email sequences</h2>
-    <p class="lede">Onboarding, follow-up and pre-call emails, written in your voice. Every box opens the same viewer, with a tab for each of the 12 emails.</p>
+    <p class="lede">Onboarding, follow-up and pre-call emails, written in your voice. Every box opens the same viewer, grouped by section so you see every email in a stage at once.</p>
   </div>
   <div class="dgrid">
     <button class="dcard" data-open="ov-emails" data-jump="0" type="button">
@@ -662,7 +668,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="head">
     <p class="eyebrow">Ad creatives</p>
     <h2>Ad creatives</h2>
-    <p class="lede">Static ads, video scripts and a swipeable carousel. Every box opens the same viewer, with a tab for each ad.</p>
+    <p class="lede">Static ads, video scripts and a swipeable carousel. Every box opens the same viewer, grouped by format so you see every ad of a type at once.</p>
   </div>
   <div class="dgrid">
     <button class="dcard" data-open="ov-ads" data-jump="0" type="button">
@@ -946,7 +952,6 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="vw" data-viewer="em">
     <h2>Email sequences, written in your voice</h2>
     <div class="vtabs" role="tablist" aria-label="Emails" id="emTabs"></div>
-    <div class="vnav"><button type="button" data-vprev>‹ Prev</button><span data-vlabel></span><button type="button" data-vnext>Next ›</button></div>
     <div id="emPanels"></div>
   </div>
   </div>
@@ -963,7 +968,6 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
       <div class="vgrp"><small>Video scripts</small><button class="vtab" role="tab" type="button">Script 1</button><button class="vtab" role="tab" type="button">Script 2</button><button class="vtab" role="tab" type="button">Script 3</button></div>
       <div class="vgrp"><small>Carousel</small><button class="vtab" role="tab" type="button">Carousel</button></div>
     </div>
-    <div class="vnav"><button type="button" data-vprev>‹ Prev</button><span data-vlabel></span><button type="button" data-vnext>Next ›</button></div>
 
     <div class="vp" role="tabpanel">
       <div class="sad">
@@ -1120,17 +1124,31 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
     panEl.appendChild(p);
   });
 
-  /* Generic tabbed viewer: tabs + prev/next switch panels in place */
+  /* Section viewer: one button per section; clicking shows every email or ad of that section stacked */
   var viewers={};
   document.querySelectorAll('[data-viewer]').forEach(function(v){
-    var tabs=v.querySelectorAll('.vtab'),pans=v.querySelectorAll('.vp'),lab=v.querySelector('[data-vlabel]'),pv=v.querySelector('[data-vprev]'),nx=v.querySelector('[data-vnext]'),cur=0;
-    function show(n){cur=Math.max(0,Math.min(tabs.length-1,n));
-      tabs.forEach(function(t,j){t.setAttribute('aria-selected',j===cur?'true':'false');t.tabIndex=j===cur?0:-1});
-      pans.forEach(function(p,j){p.hidden=j!==cur});
-      lab.textContent=(cur+1)+' of '+tabs.length+' · '+tabs[cur].textContent;pv.disabled=cur===0;nx.disabled=cur===tabs.length-1;}
-    tabs.forEach(function(t,j){t.addEventListener('click',function(){show(j)})});
-    pv.addEventListener('click',function(){show(cur-1)});nx.addEventListener('click',function(){show(cur+1)});
-    show(0);viewers[v.getAttribute('data-viewer')]=show;
+    var box=v.querySelector('.vtabs'),pans=v.querySelectorAll('.vp'),secs=[],pi=0;
+    box.querySelectorAll('.vgrp').forEach(function(g){
+      var sm=g.querySelector('small'),ix=[];
+      g.querySelectorAll('.vtab').forEach(function(t){
+        var p=pans[pi];
+        if(p){var lb=document.createElement('div');lb.className='seclabel';lb.textContent=t.textContent;p.insertBefore(lb,p.firstChild);ix.push(pi)}
+        pi++;
+      });
+      if(ix.length)secs.push({n:sm?sm.textContent:'',ix:ix});
+    });
+    box.innerHTML='';
+    var row=document.createElement('div');row.className='vsec';box.appendChild(row);
+    var btns=[],cur=0;
+    function show(k){cur=Math.max(0,Math.min(secs.length-1,k));
+      btns.forEach(function(b,j){b.setAttribute('aria-selected',j===cur?'true':'false');b.tabIndex=j===cur?0:-1});
+      pans.forEach(function(p,j){p.hidden=secs[cur].ix.indexOf(j)<0});
+      var o=v.closest('.ov');if(o)o.scrollTop=0;}
+    secs.forEach(function(sc,k){var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');
+      b.appendChild(document.createTextNode(sc.n));var c=document.createElement('i');c.textContent=sc.ix.length;b.appendChild(c);
+      b.addEventListener('click',function(){show(k)});row.appendChild(b);btns.push(b)});
+    show(0);
+    viewers[v.getAttribute('data-viewer')]=function(j){for(var k=0;k<secs.length;k++){if(secs[k].ix.indexOf(j)>=0){show(k);return}}show(0)};
   });
 
   /* Overlays */

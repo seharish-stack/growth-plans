@@ -341,6 +341,11 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .vtab:hover{background:#eadfd9}
 .vtab[aria-selected="true"]{background:#c8202b;color:#fff}
 .vtab:focus-visible{outline:3px solid #1d1a1b;outline-offset:2px}
+.vtabs.vsec{flex-direction:row;flex-wrap:wrap;gap:8px}
+.vsec .vtab{font-size:14px;padding:8px 16px}
+.vsec .vtab i{font-style:normal;opacity:.65;margin-left:6px}
+.vp:not([hidden])~.vp:not([hidden]){margin-top:34px}
+.seclabel{max-width:760px;width:100%;margin:0 auto 10px;padding:0 6px;box-sizing:border-box;font-size:12px;font-weight:800;line-height:1.2;letter-spacing:.14em;text-transform:uppercase;color:#675d59}
 .vnav{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .vnav button{all:unset;cursor:pointer;background:#1d1a1b;color:#fff;border-radius:999px;padding:9px 18px;font-weight:700;font-size:14px;flex:none}
 .vnav button[disabled]{opacity:.35;cursor:default}
@@ -614,7 +619,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="head">
     <p class="eyebrow">Email sequences</p>
     <h2>Email sequences</h2>
-    <p class="lede">Pre-webinar, post-webinar and pre-call emails, written in your voice. Every box opens the same viewer, with a tab for each of the 12 emails.</p>
+    <p class="lede">Pre-webinar, post-webinar and pre-call emails, written in your voice. Every box opens the same viewer, grouped by section so you see every email in a stage at once.</p>
   </div>
   <div class="dgrid">
     <button class="dcard" data-open="ov-emails" data-jump="0" type="button">
@@ -636,7 +641,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="head">
     <p class="eyebrow">Ad creatives</p>
     <h2>Ad creatives</h2>
-    <p class="lede">Static ads, video scripts and a swipeable carousel. Every box opens the same viewer, with a tab for each ad.</p>
+    <p class="lede">Static ads, video scripts and a swipeable carousel. Every box opens the same viewer, grouped by format so you see every ad of a type at once.</p>
   </div>
   <div class="dgrid">
     <button class="dcard" data-open="ov-ads" data-jump="0" type="button">
@@ -912,8 +917,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="ovin">
   <div class="vw" data-viewer="em">
     <h2>Email sequences, written in your voice</h2>
-    <div class="vtabs" role="tablist" aria-label="Emails" id="emTabs"></div>
-    <div class="vnav"><button type="button" data-vprev>‹ Prev</button><span data-vlabel></span><button type="button" data-vnext>Next ›</button></div>
+    <div class="vtabs vsec" role="tablist" aria-label="Email sections" id="emTabs"></div>
     <div id="emPanels"></div>
   </div>
   </div>
@@ -925,12 +929,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="ovin">
   <div class="vw" data-viewer="ad">
     <h2>Ad creatives for the Rewire Masterclass</h2>
-    <div class="vtabs" role="tablist" aria-label="Ads">
-      <div class="vgrp"><small>Static ads</small><button class="vtab" role="tab" type="button">Static 1</button><button class="vtab" role="tab" type="button">Static 2</button><button class="vtab" role="tab" type="button">Static 3</button></div>
-      <div class="vgrp"><small>Video scripts</small><button class="vtab" role="tab" type="button">Script 1</button><button class="vtab" role="tab" type="button">Script 2</button><button class="vtab" role="tab" type="button">Script 3</button></div>
-      <div class="vgrp"><small>Carousel</small><button class="vtab" role="tab" type="button">Carousel</button></div>
-    </div>
-    <div class="vnav"><button type="button" data-vprev>‹ Prev</button><span data-vlabel></span><button type="button" data-vnext>Next ›</button></div>
+    <div class="vtabs vsec" role="tablist" aria-label="Ad formats"><button class="vtab" role="tab" type="button" data-sec="0,1,2">Static ads<i>3</i></button><button class="vtab" role="tab" type="button" data-sec="3,4,5">Video scripts<i>3</i></button><button class="vtab" role="tab" type="button" data-sec="6">Carousel<i>1</i></button></div>
 
     <div class="vp" role="tabpanel">
       <div class="sad">
@@ -1077,27 +1076,32 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   var GN={Pre:'Pre-webinar',Post:'Post-webinar',Call:'Pre-call'};
   var GS={Pre:'Pre',Post:'Post',Call:'Call'};
   var tabsEl=document.getElementById('emTabs'),panEl=document.getElementById('emPanels');
-  var cnt={},grpEl={};
-  EM.forEach(function(e){
+  var cnt={},secIx={},order=[];
+  EM.forEach(function(e,n){
     cnt[e.g]=(cnt[e.g]||0)+1;
-    if(!grpEl[e.g]){grpEl[e.g]=document.createElement('div');grpEl[e.g].className='vgrp';grpEl[e.g].innerHTML='<small>'+GN[e.g]+'</small>';tabsEl.appendChild(grpEl[e.g])}
-    var t=document.createElement('button');t.type='button';t.className='vtab';t.setAttribute('role','tab');t.textContent=GS[e.g]+' '+cnt[e.g]+': '+e.l;grpEl[e.g].appendChild(t);
+    if(!secIx[e.g]){secIx[e.g]=[];order.push(e.g)}
+    secIx[e.g].push(n);
     var p=document.createElement('div');p.className='vp';p.setAttribute('role','tabpanel');p.hidden=true;
-    p.innerHTML='<div class="em-card"><dl class="em-hdr"><dt>From</dt><dd>Ashleigh Di Lello</dd><dt>Subject</dt><dd>'+e.s+'</dd><dt>Preview</dt><dd>'+e.p+'</dd></dl><div class="em-body">'+e.b+'</div></div>';
+    p.innerHTML='<div class="seclabel">'+GS[e.g]+' '+cnt[e.g]+': '+e.l+'</div><div class="em-card"><dl class="em-hdr"><dt>From</dt><dd>Ashleigh Di Lello</dd><dt>Subject</dt><dd>'+e.s+'</dd><dt>Preview</dt><dd>'+e.p+'</dd></dl><div class="em-body">'+e.b+'</div></div>';
     panEl.appendChild(p);
   });
+  order.forEach(function(g){
+    var t=document.createElement('button');t.type='button';t.className='vtab';t.setAttribute('role','tab');t.setAttribute('data-sec',secIx[g].join(','));
+    t.innerHTML=GN[g]+'<i>'+secIx[g].length+'</i>';tabsEl.appendChild(t);
+  });
 
-  /* Generic tabbed viewer: tabs + prev/next switch panels in place */
+  /* Section viewer: one button per section, every item in that section shown stacked */
   var viewers={};
   document.querySelectorAll('[data-viewer]').forEach(function(v){
-    var tabs=v.querySelectorAll('.vtab'),pans=v.querySelectorAll('.vp'),lab=v.querySelector('[data-vlabel]'),pv=v.querySelector('[data-vprev]'),nx=v.querySelector('[data-vnext]'),cur=0;
-    function show(n){cur=Math.max(0,Math.min(tabs.length-1,n));
-      tabs.forEach(function(t,j){t.setAttribute('aria-selected',j===cur?'true':'false');t.tabIndex=j===cur?0:-1});
-      pans.forEach(function(p,j){p.hidden=j!==cur});
-      lab.textContent=(cur+1)+' of '+tabs.length+' · '+tabs[cur].textContent;pv.disabled=cur===0;nx.disabled=cur===tabs.length-1;}
+    var tabs=v.querySelectorAll('.vtab'),pans=v.querySelectorAll('.vp');
+    var secs=Array.prototype.map.call(tabs,function(t){return t.getAttribute('data-sec').split(',').map(Number)});
+    function show(k){
+      tabs.forEach(function(t,j){t.setAttribute('aria-selected',j===k?'true':'false');t.tabIndex=j===k?0:-1});
+      pans.forEach(function(p,j){p.hidden=secs[k].indexOf(j)<0});
+      var o=v.closest('.ov');if(o)o.scrollTop=0;}
     tabs.forEach(function(t,j){t.addEventListener('click',function(){show(j)})});
-    pv.addEventListener('click',function(){show(cur-1)});nx.addEventListener('click',function(){show(cur+1)});
-    show(0);viewers[v.getAttribute('data-viewer')]=show;
+    show(0);
+    viewers[v.getAttribute('data-viewer')]=function(n){var k=0;secs.forEach(function(sc,j){if(sc.indexOf(n)>=0)k=j});show(k)};
   });
 
   /* Overlays */

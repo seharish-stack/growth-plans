@@ -375,6 +375,13 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .em-body .ebtn{align-self:flex-start;background:#6d2c84;color:#fff;border-radius:8px;padding:11px 20px;font-weight:700;font-size:14.5px}
 .em-body .fx{font-size:12.5px;color:#8a7b92;border-top:1px solid #eee;padding-top:12px}
 .em-body .phd{background:#fdf6e3;border:1px dashed #c9a74a;border-radius:8px;padding:10px 12px;font-size:14px;color:#6b5a26}
+/* Section tabs: one button per section, every item of that section stacked */
+.vsec{display:flex;gap:8px;flex-wrap:wrap}
+.vsec .vtab{font-size:14px;padding:9px 16px}
+.vsec .vtab i{font-style:normal;opacity:.6;margin-left:7px}
+.secview{display:flex;flex-direction:column;gap:30px;min-width:0}
+.secitem{min-width:0}
+.seclabel{margin:0 0 10px;padding:0 4px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#695a72}
 .adpanel[hidden]{display:none}
 .adpanel{display:flex;justify-content:center}
 /* Static ad */
@@ -630,7 +637,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="head">
     <p class="eyebrow">Email sequences</p>
     <h2>Email sequences</h2>
-    <p class="lede">Pre-class, post-class and pre-call emails, written in your voice. Every email opens in one viewer with a tab for each.</p>
+    <p class="lede">Pre-class, post-class and pre-call emails, written in your voice. Every email opens in one viewer, grouped by section.</p>
   </div>
   <div class="dgrid">
     <button class="dcard" data-open="ov-emails" data-jump="0" type="button">
@@ -652,7 +659,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="head">
     <p class="eyebrow">Ad creatives</p>
     <h2>Ad creatives</h2>
-    <p class="lede">Static ads, video scripts and a swipeable carousel. Every ad opens in one viewer with a tab for each.</p>
+    <p class="lede">Static ads, video scripts and a swipeable carousel. Every ad opens in one viewer, grouped by format.</p>
   </div>
   <div class="dgrid">
     <button class="dcard" data-open="ov-ads" data-jump="0" type="button">
@@ -919,10 +926,9 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="ovin">
   <div class="vw">
     <h2>Email sequences, written in your voice</h2>
-    <p class="note">Click any tab to switch emails. Items in [brackets] are merge fields or details for you to fill in.</p>
-    <div class="vtabs" id="emTabs" role="tablist" aria-label="Emails"></div>
-    <div class="vnav"><button type="button" id="emPrev">‹ Prev</button><span class="pos" id="emPos">1 / 12</span><button type="button" id="emNext">Next ›</button></div>
-    <div class="emcard" id="emView" role="tabpanel"></div>
+    <p class="note">Click a section to see all of its emails. Items in [brackets] are merge fields or details for you to fill in.</p>
+    <div class="vtabs" id="emTabs" role="tablist" aria-label="Email sections"></div>
+    <div class="secview" id="emView" role="tabpanel"></div>
   </div>
   </div>
 </div>
@@ -933,9 +939,8 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="ovin">
   <div class="vw">
     <h2>Ad creatives for the masterclass</h2>
-    <p class="note">Click any tab to switch ads. All ads carry "Educational content, not medical advice."</p>
-    <div class="vtabs" id="adTabs" role="tablist" aria-label="Ads"></div>
-    <div class="vnav"><button type="button" id="adPrev">‹ Prev</button><span class="pos" id="adPos">1 / 7</span><button type="button" id="adNext">Next ›</button></div>
+    <p class="note">Click a format to see all of its ads. All ads carry "Educational content, not medical advice."</p>
+    <div class="vtabs" id="adTabs" role="tablist" aria-label="Ad formats"></div>
 
     <div class="adpanel" data-label="Static 1" data-group="Static">
       <div class="sad">
@@ -1135,50 +1140,55 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
       '<p>Hi [first name],</p><p>So you know what to expect before we talk, here\'s how 1:1 consulting works:</p><p><b>1:1 sleep consulting:</b> personal sleep education and guidance built around the D.R.E.A.M. Sleep Method and your life. [Length and format]</p><p>It\'s education and coaching, not medical care, and it works alongside your own doctor.</p><p class="phd">[Testimonial from a client, shared with permission, name as given]</p><p>See you on the call,<br>Dr Andrea</p>'}
   ];
   var GN={'Pre':'Pre-class','Post':'Post-class','Pre-call':'Pre-call'};
-  var cnts={},emTabs=document.getElementById('emTabs'),emView=document.getElementById('emView'),emBtns=[],ei=0,grpEl={};
+  var cnts={},emTabs=document.getElementById('emTabs'),emView=document.getElementById('emView'),SECS=[],SECOF={},emRow=document.createElement('div');
+  emRow.className='vsec';emTabs.appendChild(emRow);
   E.forEach(function(m,i){
     cnts[m.g]=(cnts[m.g]||0)+1;m.n=cnts[m.g];
-    if(!grpEl[m.g]){var gdiv=document.createElement('div');gdiv.className='vgrp';var lab=document.createElement('span');lab.textContent=GN[m.g];gdiv.appendChild(lab);emTabs.appendChild(gdiv);grpEl[m.g]=gdiv}
-    var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');
-    b.textContent=m.g+' '+m.n+': '+m.k;b.addEventListener('click',function(){showEm(i)});grpEl[m.g].appendChild(b);emBtns.push(b);
+    if(!(m.g in SECOF)){SECOF[m.g]=SECS.length;SECS.push({g:m.g,ix:[]})}
+    SECS[SECOF[m.g]].ix.push(i);
   });
   var FACE=document.querySelector('.hero .who img').getAttribute('src');
   function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
-  function showEm(i){
-    ei=Math.max(0,Math.min(E.length-1,i));var m=E[ei];
-    emBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===ei?'true':'false')});
-    emView.innerHTML='<dl class="em-hdr"><dt>From</dt><dd class="fr"><img src="'+FACE+'" alt="">Dr Andrea Matsumura</dd><dt>Subject</dt><dd>'+esc(m.s)+'</dd><dt>Preview</dt><dd>'+esc(m.p)+'</dd></dl><div class="em-body">'+m.b+'<p class="fx">'+m.f+'</p></div>';
-    document.getElementById('emPos').textContent=(ei+1)+' / '+E.length+' · '+GN[m.g]+' '+m.n;
-    document.getElementById('emPrev').disabled=ei===0;document.getElementById('emNext').disabled=ei===E.length-1;
+  function emHtml(m){
+    return '<dl class="em-hdr"><dt>From</dt><dd class="fr"><img src="'+FACE+'" alt="">Dr Andrea Matsumura</dd><dt>Subject</dt><dd>'+esc(m.s)+'</dd><dt>Preview</dt><dd>'+esc(m.p)+'</dd></dl><div class="em-body">'+m.b+'<p class="fx">'+m.f+'</p></div>';
   }
-  document.getElementById('emPrev').addEventListener('click',function(){showEm(ei-1)});
-  document.getElementById('emNext').addEventListener('click',function(){showEm(ei+1)});
-  showEm(0);
-
+  var emBtns=[];
+  function showSec(k){
+    var h='';SECS[k].ix.forEach(function(i){var m=E[i];h+='<div class="secitem"><div class="seclabel">'+esc(m.g+' '+m.n+': '+m.k)+'</div><div class="emcard">'+emHtml(m)+'</div></div>'});
+    emView.innerHTML=h;
+    emBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===k?'true':'false')});
+    var o=document.getElementById('ov-emails');if(o)o.scrollTop=0;
+  }
+  SECS.forEach(function(sc,k){
+    var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');
+    b.innerHTML=esc(GN[sc.g])+'<i>'+sc.ix.length+'</i>';b.addEventListener('click',function(){showSec(k)});emRow.appendChild(b);emBtns.push(b);
+  });
+  function showEm(i){var m=E[Math.max(0,Math.min(E.length-1,i))];showSec(SECOF[m.g])}
+  showSec(0);
   /* ===== Ad viewer ===== */
-  var panels=[].slice.call(document.querySelectorAll('#ov-ads .adpanel')),adTabs=document.getElementById('adTabs'),adBtns=[],ai=0,agrp={};
+  var panels=[].slice.call(document.querySelectorAll('#ov-ads .adpanel')),adTabs=document.getElementById('adTabs'),adBtns=[],AS=[],ASOF={},adRow=document.createElement('div');
   var AG={'Static':'Static ads','Scripts':'Ad scripts','Carousel':'Carousel'};
+  adRow.className='vsec';adTabs.appendChild(adRow);
   panels.forEach(function(p,i){
     var g=p.getAttribute('data-group');
-    if(!agrp[g]){var gd=document.createElement('div');gd.className='vgrp';var l=document.createElement('span');l.textContent=AG[g];gd.appendChild(l);adTabs.appendChild(gd);agrp[g]=gd}
-    var b=document.createElement('button');b.type='button';b.className='vtab adtab';b.setAttribute('role','tab');b.textContent=p.getAttribute('data-label');
-    b.addEventListener('click',function(){showAd(i)});agrp[g].appendChild(b);adBtns.push(b);
+    if(!(g in ASOF)){ASOF[g]=AS.length;AS.push({g:g,ix:[]})}
+    AS[ASOF[g]].ix.push(i);
   });
-  function showAd(i){
-    ai=Math.max(0,Math.min(panels.length-1,i));
-    panels.forEach(function(p,j){p.hidden=j!==ai});
-    adBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===ai?'true':'false')});
-    document.getElementById('adPos').textContent=(ai+1)+' / '+panels.length+' · '+panels[ai].getAttribute('data-label');
-    document.getElementById('adPrev').disabled=ai===0;document.getElementById('adNext').disabled=ai===panels.length-1;
+  function showAg(k){
+    panels.forEach(function(p,j){p.hidden=AS[k].ix.indexOf(j)<0});
+    adBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===k?'true':'false')});
+    var o=document.getElementById('ov-ads');if(o)o.scrollTop=0;
   }
-  document.getElementById('adPrev').addEventListener('click',function(){showAd(ai-1)});
-  document.getElementById('adNext').addEventListener('click',function(){showAd(ai+1)});
-  showAd(0);
-
+  AS.forEach(function(a,k){
+    var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');
+    b.innerHTML=(AG[a.g]||a.g)+'<i>'+a.ix.length+'</i>';b.addEventListener('click',function(){showAg(k)});adRow.appendChild(b);adBtns.push(b);
+  });
+  function showAd(i){var p=panels[Math.max(0,Math.min(panels.length-1,i))];showAg(ASOF[p.getAttribute('data-group')])}
+  showAg(0);
   /* Open boxes (with jump to a tab) */
   document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){
     var id=b.getAttribute('data-open'),j=b.getAttribute('data-jump');
-    if(j!==null){var n=parseInt(j,10);if(id==='ov-emails')showEm(n);if(id==='ov-ads')showAd(n)}
+    var n=j!==null?parseInt(j,10):0;if(id==='ov-emails')showEm(n);if(id==='ov-ads')showAd(n);
     openO(id);
   })});
 

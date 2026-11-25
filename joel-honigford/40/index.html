@@ -523,6 +523,13 @@ h1{font-weight:600;line-height:1.15}
 .em-view .em-open{margin:0;border:0;border-radius:0}
 .em-body .ebtn{background:#0f7f7a}
 .adp[hidden]{display:none}
+/* Section tabs: one button per section, every item of that section stacked */
+.vsec .vrow button{font-size:14px;padding:8px 16px}
+.vsec .vrow button i{font-style:normal;opacity:.6;margin-left:6px}
+.em-stack{display:flex;flex-direction:column;gap:0}
+.secitem{margin:0 0 34px}
+.secitem:last-child{margin-bottom:0}
+.seclabel{margin:0 0 10px;padding:0 6px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#55605f}
 .sad.one{max-width:440px;width:100%;margin:0 auto}
 .scard.one{max-width:640px;width:100%;margin:0 auto}
 .cr1{background:#121417}
@@ -982,8 +989,7 @@ h1{font-weight:600;line-height:1.15}
   <div class="em-wrap">
     <h2>Email sequences, written in your voice</h2>
     <div class="vtabs" id="emTabs" role="tablist" aria-label="Emails"></div>
-    <div class="vnav"><button class="vbtn" id="emPrev" type="button">‹ Prev</button><span id="emCount">1 / 12</span><button class="vbtn" id="emNext" type="button">Next ›</button></div>
-    <div class="em-view" id="emView" role="tabpanel" aria-live="polite"></div>
+    <div class="em-stack" id="emView" role="tabpanel" aria-live="polite"></div>
     <p style="margin:0;color:#55605f;font-size:14px">Items in [brackets] are merge fields or details for you to fill in.</p>
   </div>
   </div>
@@ -995,15 +1001,7 @@ h1{font-weight:600;line-height:1.15}
   <div class="ovin">
   <div class="ad-wrap">
     <h2>Ad creatives for the masterclass</h2>
-    <div class="vtabs" id="adTabs" role="tablist" aria-label="Ads">
-      <div class="vgrp"><span class="vgl">Static ads</span><div class="vrow">
-        <button role="tab" type="button" data-adi="0">Static 1</button><button role="tab" type="button" data-adi="1">Static 2</button><button role="tab" type="button" data-adi="2">Static 3</button></div></div>
-      <div class="vgrp"><span class="vgl">Video scripts</span><div class="vrow">
-        <button role="tab" type="button" data-adi="3">Script 1</button><button role="tab" type="button" data-adi="4">Script 2</button><button role="tab" type="button" data-adi="5">Script 3</button></div></div>
-      <div class="vgrp"><span class="vgl">Carousel</span><div class="vrow">
-        <button role="tab" type="button" data-adi="6">Carousel</button></div></div>
-    </div>
-    <div class="vnav"><button class="vbtn" id="adPrev" type="button">‹ Prev</button><span id="adCount">1 / 7</span><button class="vbtn" id="adNext" type="button">Next ›</button></div>
+    <div class="vtabs" id="adTabs" role="tablist" aria-label="Ad formats"></div>
 
     <div class="adp" data-adp="0" role="tabpanel">
       <div class="sad one">
@@ -1209,39 +1207,39 @@ h1{font-weight:600;line-height:1.15}
     {g:'Pre-call',p:'Call',k:'Proof',s:'What working together looks like',v:'How I coach, and what clients say.',f:FX2,
      b:'<p>Hey [first name],</p><p>So you know what to expect before we talk: I played college football and in the NFL, and now I coach high achievers on the mental side of performance. Everything we do comes back to two ideas. Lead within. Influence beyond.</p><p class="phd">[How your 1:1 coaching works: length, format and what’s included.]</p><p class="phd">[Client testimonial or screenshot from your Instagram, shared with permission]</p><p>See you on the call,<br>Joel</p>'}
   ];
-  var emTabs=document.getElementById('emTabs'),emView=document.getElementById('emView'),emCount=document.getElementById('emCount');
-  var groups={},order=[];
+  var emTabs=document.getElementById('emTabs'),emView=document.getElementById('emView');
+  var SECN={'Pre-class':'Pre-webinar','Post-class':'Post-webinar','Pre-call':'Pre-call'};
+  var emSecs=[],emRow=document.createElement('div');emRow.className='vgrp vsec';emRow.innerHTML='<div class="vrow"></div>';emTabs.appendChild(emRow);emRow=emRow.querySelector('.vrow');
   EM.forEach(function(e,i){
-    if(!groups[e.g]){var g=document.createElement('div');g.className='vgrp';g.innerHTML='<span class="vgl">'+e.g+'</span><div class="vrow"></div>';emTabs.appendChild(g);groups[e.g]=g.querySelector('.vrow');order.push(e.g)}
-    var n=EM.slice(0,i+1).filter(function(x){return x.g===e.g}).length;
-    var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.setAttribute('data-emi',i);b.textContent=e.p+' '+n+': '+e.k;
-    b.addEventListener('click',function(){showEmail(i)});groups[e.g].appendChild(b);
+    var sec=emSecs.filter(function(x){return x.g===e.g})[0];
+    if(!sec){sec={g:e.g,ix:[]};emSecs.push(sec)}
+    sec.ix.push(i);e.l=e.p+' '+sec.ix.length+': '+e.k;
   });
-  var emI=0;
-  function showEmail(i){
-    emI=Math.max(0,Math.min(EM.length-1,i));var e=EM[emI];
-    emView.innerHTML='<div class="em-open"><dl class="em-hdr"><dt>From</dt><dd>Joel Honigford</dd><dt>Subject</dt><dd>'+e.s+'</dd><dt>Preview</dt><dd>'+e.v+'</dd></dl><div class="em-body">'+e.b+'<p class="fx">'+e.f+'</p></div></div>';
-    emTabs.querySelectorAll('[data-emi]').forEach(function(b){var on=+b.getAttribute('data-emi')===emI;b.setAttribute('aria-selected',on?'true':'false')});
-    emCount.textContent=(emI+1)+' / '+EM.length+' · '+e.g;
-    document.getElementById('emPrev').disabled=emI===0;document.getElementById('emNext').disabled=emI===EM.length-1;
+  emSecs.forEach(function(sec,k){
+    var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.setAttribute('data-emsec',k);
+    b.innerHTML=(SECN[sec.g]||sec.g)+'<i>'+sec.ix.length+'</i>';b.addEventListener('click',function(){showEmSec(k)});emRow.appendChild(b);
+  });
+  function emCard(e){return '<div class="em-view"><div class="em-open"><dl class="em-hdr"><dt>From</dt><dd>Joel Honigford</dd><dt>Subject</dt><dd>'+e.s+'</dd><dt>Preview</dt><dd>'+e.v+'</dd></dl><div class="em-body">'+e.b+'<p class="fx">'+e.f+'</p></div></div></div>'}
+  function showEmSec(k){
+    var h='';emSecs[k].ix.forEach(function(i){h+='<div class="secitem"><div class="seclabel">'+EM[i].l+'</div>'+emCard(EM[i])+'</div>'});emView.innerHTML=h;
+    emTabs.querySelectorAll('[data-emsec]').forEach(function(b){b.setAttribute('aria-selected',+b.getAttribute('data-emsec')===k?'true':'false')});
+    var o=document.getElementById('ov-emails');if(o)o.scrollTop=0;
   }
-  document.getElementById('emPrev').addEventListener('click',function(){showEmail(emI-1)});
-  document.getElementById('emNext').addEventListener('click',function(){showEmail(emI+1)});
-  showEmail(0);
+  function showEmail(i){for(var k=0;k<emSecs.length;k++){if(emSecs[k].ix.indexOf(i)>=0)return showEmSec(k)}showEmSec(0)}
+  showEmSec(0);
 
-  /* ===== Ad viewer ===== */
-  var adPanes=document.querySelectorAll('[data-adp]'),adBtns=document.querySelectorAll('[data-adi]'),adI=0,ADN=adPanes.length;
-  function showAd(i){
-    adI=Math.max(0,Math.min(ADN-1,i));
-    adPanes.forEach(function(p){p.hidden=+p.getAttribute('data-adp')!==adI});
-    adBtns.forEach(function(b){b.setAttribute('aria-selected',+b.getAttribute('data-adi')===adI?'true':'false')});
-    document.getElementById('adCount').textContent=(adI+1)+' / '+ADN;
-    document.getElementById('adPrev').disabled=adI===0;document.getElementById('adNext').disabled=adI===ADN-1;
+  /* ===== Ad viewer (one button per format, every ad of that format stacked) ===== */
+  var adPanes=document.querySelectorAll('[data-adp]'),adTabs=document.getElementById('adTabs');
+  var ADG=[['Static ads',[0,1,2]],['Video scripts',[3,4,5]],['Carousel',[6]]];
+  var adRow=document.createElement('div');adRow.className='vgrp vsec';adRow.innerHTML='<div class="vrow"></div>';adTabs.appendChild(adRow);adRow=adRow.querySelector('.vrow');
+  ADG.forEach(function(g,k){var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.setAttribute('data-adsec',k);b.innerHTML=g[0]+'<i>'+g[1].length+'</i>';b.addEventListener('click',function(){showAdSec(k)});adRow.appendChild(b)});
+  function showAdSec(k){
+    var ix=ADG[k][1];adPanes.forEach(function(p){p.hidden=ix.indexOf(+p.getAttribute('data-adp'))<0});
+    adTabs.querySelectorAll('[data-adsec]').forEach(function(b){b.setAttribute('aria-selected',+b.getAttribute('data-adsec')===k?'true':'false')});
+    var o=document.getElementById('ov-ads');if(o)o.scrollTop=0;
   }
-  adBtns.forEach(function(b){b.addEventListener('click',function(){showAd(+b.getAttribute('data-adi'))})});
-  document.getElementById('adPrev').addEventListener('click',function(){showAd(adI-1)});
-  document.getElementById('adNext').addEventListener('click',function(){showAd(adI+1)});
-  showAd(0);
+  function showAd(i){for(var k=0;k<ADG.length;k++){if(ADG[k][1].indexOf(i)>=0)return showAdSec(k)}showAdSec(0)}
+  showAdSec(0);
 
   /* Carousel */
   var car=document.getElementById('car'),track=document.getElementById('carTrack'),cnt=document.getElementById('carCnt'),

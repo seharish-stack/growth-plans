@@ -371,7 +371,17 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .em-body .fx{font-size:12.5px;color:#90808b;border-top:1px solid #eee;padding-top:12px}
 .em-body .phd{background:#fdf6e3;border:1px dashed #c9a74a;border-radius:8px;padding:10px 12px;font-size:14px;color:#6b5a26}
 .adpanel[hidden]{display:none}
-.adpanel{display:flex;justify-content:center}
+.adpanel{display:flex;flex-direction:column;align-items:center}
+/* Section tabs: one button per section, every item of that section stacked */
+.vsec{display:flex;gap:8px;flex-wrap:wrap}
+.vsec .vtab{font-size:14px;padding:8px 16px}
+.vsec .vtab i{font-style:normal;opacity:.6;margin-left:6px}
+.secitem{margin:0 0 30px}
+.secitem:last-child{margin-bottom:0}
+.seclabel{margin:8px 0 10px;padding:0 4px;font-size:12px;font-weight:800;line-height:1.2;letter-spacing:.14em;text-transform:uppercase;color:#675f6c;align-self:stretch;max-width:680px;width:100%;margin-left:auto;margin-right:auto}
+#emView .seclabel{max-width:none}
+.adpanel:has(.sad) .seclabel{max-width:460px}
+.adpanel:has(.phone) .seclabel{max-width:370px}
 /* Static ad */
 .sad{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(58,31,55,.1);display:flex;flex-direction:column;width:min(460px,100%)}
 .sad .hd{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:13.5px}
@@ -622,7 +632,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="head">
     <p class="eyebrow">Email sequences</p>
     <h2>Email sequences</h2>
-    <p class="lede">Pre-class, post-class and pre-call emails, written in your voice. Every email opens in one viewer with a tab for each.</p>
+    <p class="lede">Pre-class, post-class and pre-call emails, written in your voice. Every email opens in one viewer, grouped by section.</p>
   </div>
   <div class="dgrid">
     <button class="dcard" data-open="ov-emails" data-jump="0" type="button">
@@ -644,7 +654,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="head">
     <p class="eyebrow">Ad creatives</p>
     <h2>Ad creatives</h2>
-    <p class="lede">Static ads, video scripts and a swipeable carousel. Every ad opens in one viewer with a tab for each.</p>
+    <p class="lede">Static ads, video scripts and a swipeable carousel. Every ad opens in one viewer, grouped by format.</p>
   </div>
   <div class="dgrid">
     <button class="dcard" data-open="ov-ads" data-jump="0" type="button">
@@ -913,8 +923,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
     <h2>Email sequences, written in your voice</h2>
     <p class="note">Click any tab to switch emails. Items in [brackets] are merge fields or details for you to fill in.</p>
     <div class="vtabs" id="emTabs" role="tablist" aria-label="Emails"></div>
-    <div class="vnav"><button type="button" id="emPrev">‹ Prev</button><span class="pos" id="emPos">1 / 12</span><button type="button" id="emNext">Next ›</button></div>
-    <div class="emcard" id="emView" role="tabpanel"></div>
+    <div id="emView" role="tabpanel"></div>
   </div>
   </div>
 </div>
@@ -927,7 +936,6 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
     <h2>Ad creatives for the masterclass</h2>
     <p class="note">Click any tab to switch ads. Written in the third person for Meta's personal-attributes policy. All ads carry "Educational content, not medical advice."</p>
     <div class="vtabs" id="adTabs" role="tablist" aria-label="Ads"></div>
-    <div class="vnav"><button type="button" id="adPrev">‹ Prev</button><span class="pos" id="adPos">1 / 7</span><button type="button" id="adNext">Next ›</button></div>
 
     <div class="adpanel" data-label="Static 1" data-group="Static">
       <div class="sad">
@@ -1127,45 +1135,58 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
       '<p>Hi [first name],</p><p>So you know what to expect before we talk, here\'s how 1:1 coaching works:</p><p><b>1:1 parent coaching:</b> personal support built around your child, your home and your hardest moments. [Length, format and price to confirm]</p><p class="phd">[Trustpilot review or testimonial from a parent, shared with permission, name as given]</p><p>See you on the call,<br>Laura</p>'}
   ];
   var GN={'Pre':'Pre-class','Post':'Post-class','Pre-call':'Pre-call'};
-  var cnts={},emTabs=document.getElementById('emTabs'),emView=document.getElementById('emView'),emBtns=[],ei=0,grpEl={};
+  var cnts={},emTabs=document.getElementById('emTabs'),emView=document.getElementById('emView'),ESEC=[],esk=0;
   E.forEach(function(m,i){
     cnts[m.g]=(cnts[m.g]||0)+1;m.n=cnts[m.g];
-    if(!grpEl[m.g]){var gdiv=document.createElement('div');gdiv.className='vgrp';var lab=document.createElement('span');lab.textContent=GN[m.g];gdiv.appendChild(lab);emTabs.appendChild(gdiv);grpEl[m.g]=gdiv}
+    var sc=ESEC.filter(function(x){return x.g===m.g})[0];
+    if(!sc){sc={g:m.g,ix:[]};ESEC.push(sc)}
+    sc.ix.push(i);
+  });
+  var emRow=document.createElement('div');emRow.className='vsec';emTabs.appendChild(emRow);
+  ESEC.forEach(function(sc,k){
     var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');
-    b.textContent=m.g+' '+m.n+': '+m.k;b.addEventListener('click',function(){showEm(i)});grpEl[m.g].appendChild(b);emBtns.push(b);
+    b.innerHTML=GN[sc.g]+'<i>'+sc.ix.length+'</i>';b.addEventListener('click',function(){showSec(k)});emRow.appendChild(b);sc.btn=b;
   });
   var FACE=document.querySelector('.hero .who img').getAttribute('src');
   function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
-  function showEm(i){
-    ei=Math.max(0,Math.min(E.length-1,i));var m=E[ei];
-    emBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===ei?'true':'false')});
-    emView.innerHTML='<dl class="em-hdr"><dt>From</dt><dd class="fr"><img src="'+FACE+'" alt="">Laura Ellis</dd><dt>Subject</dt><dd>'+esc(m.s)+'</dd><dt>Preview</dt><dd>'+esc(m.p)+'</dd></dl><div class="em-body">'+m.b+'<p class="fx">'+m.f+'</p></div>';
-    document.getElementById('emPos').textContent=(ei+1)+' / '+E.length+' · '+GN[m.g]+' '+m.n;
-    document.getElementById('emPrev').disabled=ei===0;document.getElementById('emNext').disabled=ei===E.length-1;
+  function card(m){
+    return '<div class="emcard"><dl class="em-hdr"><dt>From</dt><dd class="fr"><img src="'+FACE+'" alt="">Laura Ellis</dd><dt>Subject</dt><dd>'+esc(m.s)+'</dd><dt>Preview</dt><dd>'+esc(m.p)+'</dd></dl><div class="em-body">'+m.b+'<p class="fx">'+m.f+'</p></div></div>';
   }
-  document.getElementById('emPrev').addEventListener('click',function(){showEm(ei-1)});
-  document.getElementById('emNext').addEventListener('click',function(){showEm(ei+1)});
-  showEm(0);
+  function showSec(k){
+    esk=Math.max(0,Math.min(ESEC.length-1,k));var h='';
+    ESEC[esk].ix.forEach(function(i){var m=E[i];h+='<div class="secitem"><div class="seclabel">'+esc(m.g+' '+m.n+': '+m.k)+'</div>'+card(m)+'</div>'});
+    emView.innerHTML=h;
+    ESEC.forEach(function(sc,j){sc.btn.setAttribute('aria-selected',j===esk?'true':'false')});
+    var o=document.getElementById('ov-emails');if(o)o.scrollTop=0;
+  }
+  /* A box that jumps to email n opens the section that email is in */
+  function showEm(n){for(var k=0;k<ESEC.length;k++){if(ESEC[k].ix.indexOf(n)>=0){showSec(k);return}}showSec(0)}
+  showSec(0);
 
   /* ===== Ad viewer ===== */
-  var panels=[].slice.call(document.querySelectorAll('#ov-ads .adpanel')),adTabs=document.getElementById('adTabs'),adBtns=[],ai=0,agrp={};
+  var panels=[].slice.call(document.querySelectorAll('#ov-ads .adpanel')),adTabs=document.getElementById('adTabs'),ASEC=[],ask=0;
   var AG={'Static':'Static ads','Scripts':'Ad scripts','Carousel':'Carousel'};
   panels.forEach(function(p,i){
     var g=p.getAttribute('data-group');
-    if(!agrp[g]){var gd=document.createElement('div');gd.className='vgrp';var l=document.createElement('span');l.textContent=AG[g];gd.appendChild(l);adTabs.appendChild(gd);agrp[g]=gd}
-    var b=document.createElement('button');b.type='button';b.className='vtab adtab';b.setAttribute('role','tab');b.textContent=p.getAttribute('data-label');
-    b.addEventListener('click',function(){showAd(i)});agrp[g].appendChild(b);adBtns.push(b);
+    var sc=ASEC.filter(function(x){return x.g===g})[0];
+    if(!sc){sc={g:g,ix:[]};ASEC.push(sc)}
+    sc.ix.push(i);
+    var l=document.createElement('div');l.className='seclabel';l.textContent=p.getAttribute('data-label');p.insertBefore(l,p.firstChild);
   });
-  function showAd(i){
-    ai=Math.max(0,Math.min(panels.length-1,i));
-    panels.forEach(function(p,j){p.hidden=j!==ai});
-    adBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===ai?'true':'false')});
-    document.getElementById('adPos').textContent=(ai+1)+' / '+panels.length+' · '+panels[ai].getAttribute('data-label');
-    document.getElementById('adPrev').disabled=ai===0;document.getElementById('adNext').disabled=ai===panels.length-1;
+  var adRow=document.createElement('div');adRow.className='vsec';adTabs.appendChild(adRow);
+  ASEC.forEach(function(sc,k){
+    var b=document.createElement('button');b.type='button';b.className='vtab adtab';b.setAttribute('role','tab');
+    b.innerHTML=AG[sc.g]+'<i>'+sc.ix.length+'</i>';b.addEventListener('click',function(){showAg(k)});adRow.appendChild(b);sc.btn=b;
+  });
+  function showAg(k){
+    ask=Math.max(0,Math.min(ASEC.length-1,k));
+    panels.forEach(function(p,j){var on=ASEC[ask].ix.indexOf(j)>=0;p.hidden=!on;p.classList.toggle('secitem',on)});
+    ASEC.forEach(function(sc,j){sc.btn.setAttribute('aria-selected',j===ask?'true':'false')});
+    var o=document.getElementById('ov-ads');if(o)o.scrollTop=0;
   }
-  document.getElementById('adPrev').addEventListener('click',function(){showAd(ai-1)});
-  document.getElementById('adNext').addEventListener('click',function(){showAd(ai+1)});
-  showAd(0);
+  /* A box that jumps to ad n opens the format that ad is in */
+  function showAd(n){for(var k=0;k<ASEC.length;k++){if(ASEC[k].ix.indexOf(n)>=0){showAg(k);return}}showAg(0)}
+  showAg(0);
 
   /* Open boxes (with jump to a tab) */
   document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){

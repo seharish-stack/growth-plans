@@ -354,6 +354,11 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .vtab:hover{background:#ecd9f6}
 .vtab[aria-selected="true"]{background:#5a0972;color:#fff}
 .vtab:focus-visible{outline:3px solid #a63fc4;outline-offset:2px}
+.vsec{display:flex;gap:8px;flex-wrap:wrap}
+.vsec .vtab{font-size:14px;padding:9px 16px}
+.vsec .vtab i{font-style:normal;opacity:.65;margin-left:6px}
+.secitem{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.seclabel{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#6b5a72;padding:0 4px}
 .vnav{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .vnav button{all:unset;cursor:pointer;background:#2a0e35;color:#fff;border-radius:999px;padding:9px 18px;font-weight:800;font-size:14px}
 .vnav button[disabled]{opacity:.35;cursor:default}
@@ -625,7 +630,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="head">
     <p class="eyebrow">Email sequences</p>
     <h2>Email sequences</h2>
-    <p class="lede">Pre-class, post-class and pre-call emails, written in your voice. Each box opens one viewer with a tab for every email.</p>
+    <p class="lede">Pre-class, post-class and pre-call emails, written in your voice. Each box opens one viewer, grouped by section.</p>
   </div>
   <div class="dgrid">
     <button class="dcard" data-open="ov-emails" data-em="0" type="button">
@@ -647,7 +652,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="head">
     <p class="eyebrow">Ad creatives</p>
     <h2>Ad creatives</h2>
-    <p class="lede">Static ads, video scripts and a swipeable carousel. Each box opens one viewer with a tab for every ad.</p>
+    <p class="lede">Static ads, video scripts and a swipeable carousel. Each box opens one viewer, grouped by format.</p>
   </div>
   <div class="dgrid">
     <button class="dcard" data-open="ov-ads" data-ad="0" type="button">
@@ -902,7 +907,6 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
     <div class="vw">
       <h2>Email sequences for The Self-Worth Reset</h2>
       <div class="vtabs" id="em-tabs" role="tablist" aria-label="Emails"></div>
-      <div class="vnav"><button type="button" id="em-prev">← Prev</button><span id="em-pos">1 / 12</span><button type="button" id="em-next">Next →</button></div>
       <div id="em-pane" role="tabpanel"></div>
     </div>
   </div>
@@ -914,12 +918,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="ovin">
     <div class="vw">
       <h2>Ad creatives for The Self-Worth Reset</h2>
-      <div class="vtabs" role="tablist" aria-label="Ads">
-        <div class="vgrp"><span>Static ads</span><button class="vtab ad-tab" type="button" role="tab">Static 1</button><button class="vtab ad-tab" type="button" role="tab">Static 2</button><button class="vtab ad-tab" type="button" role="tab">Static 3</button></div>
-        <div class="vgrp"><span>Video scripts</span><button class="vtab ad-tab" type="button" role="tab">Script 1</button><button class="vtab ad-tab" type="button" role="tab">Script 2</button><button class="vtab ad-tab" type="button" role="tab">Script 3</button></div>
-        <div class="vgrp"><span>Carousel</span><button class="vtab ad-tab" type="button" role="tab">Carousel</button></div>
-      </div>
-      <div class="vnav"><button type="button" id="ad-prev">← Prev</button><span id="ad-pos">1 / 7</span><button type="button" id="ad-next">Next →</button></div>
+      <div class="vtabs" id="ad-tabs" role="tablist" aria-label="Ad formats"></div>
 
       <div class="adp" role="tabpanel">
         <div class="adone">
@@ -1087,37 +1086,39 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
    {g:'Pre-call',t:'Pre-call 2: What to prepare',s:'Three questions before we talk',p:'Five quiet minutes is all you need.',b:['Hi [First name],','To make our call as useful as possible, take five quiet minutes with these:','1. What pattern would you most like to change?<br>2. What would feel different in your life if it did?<br>3. What support has or hasn’t helped before?','You don’t need perfect answers. Just bring what comes up.','Ana Maria']},
    {g:'Pre-call',t:'Pre-call 3: Proof',s:'Before our call tomorrow',p:'A few words from people I’ve worked with.',b:['Hi [First name],','Looking forward to our call tomorrow. In the meantime, here are some words from people who’ve worked with me:','<span class="phd">[Two or three short client testimonials, quoted exactly with names as given]</span>','See you tomorrow,<br>Ana Maria','<span class="fx">Coaching is educational support, not therapy or medical care.</span>']}
   ];
-  var emTabs=document.getElementById('em-tabs'),emPane=document.getElementById('em-pane'),emPos=document.getElementById('em-pos'),
-      emPrev=document.getElementById('em-prev'),emNext=document.getElementById('em-next'),emI=0,grpEl={};
+  /* Section tabs: one button per stage, showing every email of that stage stacked */
+  var emTabs=document.getElementById('em-tabs'),emPane=document.getElementById('em-pane'),emRow=document.createElement('div'),SECS=[],secOf=[];
+  emRow.className='vsec';emTabs.appendChild(emRow);
   EM.forEach(function(e,k){
-    if(!grpEl[e.g]){var g=document.createElement('div');g.className='vgrp';var l=document.createElement('span');l.textContent=e.g;g.appendChild(l);emTabs.appendChild(g);grpEl[e.g]=g}
-    var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');b.textContent=e.t;
-    b.addEventListener('click',function(){showEm(k)});grpEl[e.g].appendChild(b);
+    var s=null;SECS.forEach(function(x){if(x.n===e.g)s=x});
+    if(!s){s={n:e.g,ix:[]};SECS.push(s)}
+    s.ix.push(k);secOf[k]=SECS.indexOf(s);
   });
-  var emBtns=emTabs.querySelectorAll('.vtab');
-  function showEm(k){
-    emI=Math.max(0,Math.min(EM.length-1,k));var e=EM[emI];
-    emPane.innerHTML='<div class="emc"><dl class="eh"><dt>From</dt><dd class="from"><img src="'+AV+'" alt="">'+FROM+'</dd><dt>Subject</dt><dd>'+e.s+'</dd><dt>Preview</dt><dd style="font-weight:400">'+e.p+'</dd></dl><div class="eb">'+e.b.map(function(x){return x.indexOf('<span class="ebtn"')===0||x.indexOf('<span class="phd"')===0||x.indexOf('<span class="fx"')===0?x:'<p>'+x+'</p>'}).join('')+'</div></div>';
-    emBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===emI?'true':'false')});
-    emPos.textContent=e.t+' · '+(emI+1)+' / '+EM.length;emPrev.disabled=emI===0;emNext.disabled=emI===EM.length-1;
+  function emCard(e){
+    return '<div class="emc"><dl class="eh"><dt>From</dt><dd class="from"><img src="'+AV+'" alt="">'+FROM+'</dd><dt>Subject</dt><dd>'+e.s+'</dd><dt>Preview</dt><dd style="font-weight:400">'+e.p+'</dd></dl><div class="eb">'+e.b.map(function(x){return x.indexOf('<span class="ebtn"')===0||x.indexOf('<span class="phd"')===0||x.indexOf('<span class="fx"')===0?x:'<p>'+x+'</p>'}).join('')+'</div></div>';
   }
-  emPrev.addEventListener('click',function(){showEm(emI-1)});
-  emNext.addEventListener('click',function(){showEm(emI+1)});
-  showEm(0);
+  function showSec(k){
+    emPane.innerHTML=SECS[k].ix.map(function(i){return '<div class="secitem"><div class="seclabel">'+EM[i].t+'</div>'+emCard(EM[i])+'</div>'}).join('');
+    emRow.querySelectorAll('.vtab').forEach(function(b,j){b.setAttribute('aria-selected',j===k?'true':'false')});
+    var o=document.getElementById('ov-emails');if(o)o.scrollTop=0;
+  }
+  SECS.forEach(function(x,k){var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');b.innerHTML=x.n+'<i>'+x.ix.length+'</i>';b.addEventListener('click',function(){showSec(k)});emRow.appendChild(b)});
+  function showEm(k){showSec(secOf[Math.max(0,Math.min(EM.length-1,k))]||0)}
+  showSec(0);
 
   /* ===== Ads ===== */
-  var adTabs=document.querySelectorAll('.ad-tab'),adPanes=document.querySelectorAll('#ov-ads .adp'),adPos=document.getElementById('ad-pos'),
-      adPrev=document.getElementById('ad-prev'),adNext=document.getElementById('ad-next'),adI=0;
-  function showAd(k){
-    adI=Math.max(0,Math.min(adPanes.length-1,k));
-    adPanes.forEach(function(p,j){p.hidden=j!==adI});
-    adTabs.forEach(function(b,j){b.setAttribute('aria-selected',j===adI?'true':'false')});
-    adPos.textContent=adTabs[adI].textContent+' · '+(adI+1)+' / '+adPanes.length;adPrev.disabled=adI===0;adNext.disabled=adI===adPanes.length-1;
+  /* Section tabs: one button per ad format, showing every ad of that format stacked */
+  var adPanes=document.querySelectorAll('#ov-ads .adp'),adRow=document.createElement('div'),
+      ADG=[['Static ads',[0,1,2]],['Video scripts',[3,4,5]],['Carousel',[6]]];
+  adRow.className='vsec';document.getElementById('ad-tabs').appendChild(adRow);
+  function showAg(k){
+    adPanes.forEach(function(p,j){p.hidden=ADG[k][1].indexOf(j)<0});
+    adRow.querySelectorAll('.vtab').forEach(function(b,j){b.setAttribute('aria-selected',j===k?'true':'false')});
+    var o=document.getElementById('ov-ads');if(o)o.scrollTop=0;
   }
-  adTabs.forEach(function(b,j){b.addEventListener('click',function(){showAd(j)})});
-  adPrev.addEventListener('click',function(){showAd(adI-1)});
-  adNext.addEventListener('click',function(){showAd(adI+1)});
-  showAd(0);
+  ADG.forEach(function(g,k){var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');b.innerHTML=g[0]+'<i>'+g[1].length+'</i>';b.addEventListener('click',function(){showAg(k)});adRow.appendChild(b)});
+  function showAd(n){var k=0;ADG.forEach(function(g,j){if(g[1].indexOf(n)>=0)k=j});showAg(k)}
+  showAg(0);
 
   /* Openers */
   document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){

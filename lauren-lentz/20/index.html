@@ -346,6 +346,9 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .vw .note{margin:0;color:#5b6869;font-size:15px}
 .tgroups{display:flex;flex-direction:column;gap:10px;background:#fff;border-radius:14px;padding:14px;box-shadow:0 6px 20px rgba(31,47,51,.06)}
 .tg{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.tg .vtab i{font-style:normal;opacity:.6;margin-left:6px}
+.secstack{display:flex;flex-direction:column;gap:30px}
+.seclabel{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#2c6e7e;margin:0 0 10px 4px}
 .tg>span{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#2c6e7e;width:96px;flex:none}
 .vtab{all:unset;box-sizing:border-box;cursor:pointer;padding:7px 12px;border-radius:999px;font-weight:600;font-size:13.5px;border:1px solid #e3dccf;background:#fbf8f5;color:#1f2f33;white-space:nowrap}
 .vtab:hover{border-color:#2c6e7e}
@@ -925,8 +928,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
     <h2>Email sequences, written in your voice</h2>
     <p class="note">Click any tab to switch emails. Items in [brackets] are merge fields or details for you to fill in.</p>
     <div class="tgroups" id="emTabs" role="tablist" aria-label="Emails"></div>
-    <div class="vnav"><button type="button" id="emPrev">‹ Prev</button><span class="pos" id="emPos">1 / 12</span><button type="button" id="emNext">Next ›</button></div>
-    <article class="mail" id="emView" role="tabpanel" aria-live="polite"></article>
+    <div class="secstack" id="emView" role="tabpanel" aria-live="polite"></div>
   </div>
   </div>
 </div>
@@ -939,11 +941,8 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
     <h2>Ad creatives for the masterclass</h2>
     <p class="note">Click any tab to switch ads. All copy is written in the third person, so it never implies anything about the person seeing it.</p>
     <div class="tgroups" role="tablist" aria-label="Ads">
-      <div class="tg"><span>Static</span><button class="vtab adtab" role="tab" type="button">Static 1</button><button class="vtab adtab" role="tab" type="button">Static 2</button><button class="vtab adtab" role="tab" type="button">Static 3</button></div>
-      <div class="tg"><span>Video scripts</span><button class="vtab adtab" role="tab" type="button">Script 1</button><button class="vtab adtab" role="tab" type="button">Script 2</button><button class="vtab adtab" role="tab" type="button">Script 3</button></div>
-      <div class="tg"><span>Carousel</span><button class="vtab adtab" role="tab" type="button">Carousel</button></div>
+      <div class="tg"><button class="vtab adsec" role="tab" type="button" data-labels="Static 1|Static 2|Static 3">Static</button><button class="vtab adsec" role="tab" type="button" data-labels="Script 1|Script 2|Script 3">Video scripts</button><button class="vtab adsec" role="tab" type="button" data-labels="Carousel">Carousel</button></div>
     </div>
-    <div class="vnav"><button type="button" id="adPrev">‹ Prev</button><span class="pos" id="adPos">1 / 7</span><button type="button" id="adNext">Next ›</button></div>
 
     <div class="adp" role="tabpanel">
       <div class="adone">
@@ -1154,46 +1153,48 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
      b:'<p>Hi [first name],</p><p>So you know what to expect before we talk: my 1:1 Grief Support is a personal coaching package, and for women wanting a longer, deeper journey there’s The Sacred Grief Container.</p><p>We work with where you are: early grief, rebuilding, or learning to live again, with gentle body-based tools along the way.</p><p class="phd">[Client testimonial from your Instagram, shared with permission]</p><p>See you on the call,<br>Lauren</p>'}
   ];
   var AV=document.querySelector('.hero .who img').src;
-  var emTabs=document.getElementById('emTabs'),emView=document.getElementById('emView'),emPos=document.getElementById('emPos'),
-      emPrev=document.getElementById('emPrev'),emNext=document.getElementById('emNext'),emI=0,emBtns=[];
-  var groupsSeen={};
+  var emTabs=document.getElementById('emTabs'),emView=document.getElementById('emView'),emSecs=[],emSecOf=[],emBtns=[];
+  var emRow=document.createElement('div');emRow.className='tg';emTabs.appendChild(emRow);
   EM.forEach(function(e,idx){
-    var row=groupsSeen[e.g];
-    if(!row){row=document.createElement('div');row.className='tg';var l=document.createElement('span');l.textContent=e.g;row.appendChild(l);emTabs.appendChild(row);groupsSeen[e.g]=row}
-    var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');b.textContent=e.t;
-    b.addEventListener('click',function(){showEm(idx)});row.appendChild(b);emBtns.push(b);
+    var k=-1;emSecs.forEach(function(x,j){if(x.g===e.g)k=j});
+    if(k<0){emSecs.push({g:e.g,ix:[]});k=emSecs.length-1}
+    emSecs[k].ix.push(idx);emSecOf[idx]=k;
   });
   function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
-  function showEm(n){
-    emI=Math.max(0,Math.min(EM.length-1,n));var e=EM[emI];
-    emView.innerHTML='<div class="subj">'+esc(e.s)+'<span>Inbox</span></div>'+
+  function mailHTML(e){
+    return '<div class="subj">'+esc(e.s)+'<span>Inbox</span></div>'+
       '<div class="from"><img src="'+AV+'" alt=""><div><b>Lauren Lentz</b><small>to me · '+esc(e.g)+' sequence</small></div></div>'+
       '<dl><dt>From</dt><dd>Lauren Lentz</dd><dt>Subject</dt><dd>'+esc(e.s)+'</dd><dt>Preview</dt><dd>'+esc(e.p)+'</dd></dl>'+
       '<div class="body">'+e.b+'<p class="fx">'+e.fx+'</p></div>';
-    emBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===emI?'true':'false')});
-    emPos.textContent=(emI+1)+' / '+EM.length+' · '+e.t;
-    emPrev.disabled=emI===0;emNext.disabled=emI===EM.length-1;
   }
-  emPrev.addEventListener('click',function(){showEm(emI-1)});
-  emNext.addEventListener('click',function(){showEm(emI+1)});
-  document.querySelectorAll('[data-email]').forEach(function(b){b.addEventListener('click',function(){showEm(parseInt(b.getAttribute('data-email'),10));openO('ov-emails')})});
-  showEm(0);
+  function showEmSec(k){
+    var h='';emSecs[k].ix.forEach(function(i){h+='<div class="secitem"><div class="seclabel">'+esc(EM[i].t)+'</div><article class="mail">'+mailHTML(EM[i])+'</article></div>'});
+    emView.innerHTML=h;
+    emBtns.forEach(function(b,j){b.setAttribute('aria-selected',j===k?'true':'false')});
+    var o=document.getElementById('ov-emails');if(o)o.scrollTop=0;
+  }
+  emSecs.forEach(function(x,k){
+    var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');
+    b.innerHTML=esc(x.g)+'<i>'+x.ix.length+'</i>';b.addEventListener('click',function(){showEmSec(k)});emRow.appendChild(b);emBtns.push(b);
+  });
+  document.querySelectorAll('[data-email]').forEach(function(b){b.addEventListener('click',function(){openO('ov-emails');showEmSec(emSecOf[parseInt(b.getAttribute('data-email'),10)]||0)})});
+  showEmSec(0);
 
   /* ===== Ad viewer ===== */
-  var adTabs=[].slice.call(document.querySelectorAll('.adtab')),adPanels=[].slice.call(document.querySelectorAll('.adp')),
-      adPos=document.getElementById('adPos'),adPrev=document.getElementById('adPrev'),adNext=document.getElementById('adNext'),adI=0;
-  function showAd(n){
-    adI=Math.max(0,Math.min(adPanels.length-1,n));
-    adPanels.forEach(function(p,j){p.hidden=j!==adI});
-    adTabs.forEach(function(t,j){t.setAttribute('aria-selected',j===adI?'true':'false')});
-    adPos.textContent=(adI+1)+' / '+adPanels.length+' · '+adTabs[adI].textContent;
-    adPrev.disabled=adI===0;adNext.disabled=adI===adPanels.length-1;
+  var adSecBtns=[].slice.call(document.querySelectorAll('.adsec')),adPanels=[].slice.call(document.querySelectorAll('.adp')),adSecs=[],adSecOf=[],adN=0;
+  adSecBtns.forEach(function(t,k){
+    var labels=t.getAttribute('data-labels').split('|'),ix=[];
+    labels.forEach(function(l){var p=adPanels[adN];if(p){var d=document.createElement('div');d.className='seclabel';d.textContent=l;p.insertBefore(d,p.firstChild);ix.push(adN);adSecOf[adN]=k}adN++});
+    adSecs.push(ix);var c=document.createElement('i');c.textContent=ix.length;t.appendChild(c);
+    t.addEventListener('click',function(){showAdSec(k)});
+  });
+  function showAdSec(k){
+    adPanels.forEach(function(p,j){p.hidden=adSecs[k].indexOf(j)<0});
+    adSecBtns.forEach(function(t,j){t.setAttribute('aria-selected',j===k?'true':'false')});
+    var o=document.getElementById('ov-ads');if(o)o.scrollTop=0;
   }
-  adTabs.forEach(function(t,j){t.addEventListener('click',function(){showAd(j)})});
-  adPrev.addEventListener('click',function(){showAd(adI-1)});
-  adNext.addEventListener('click',function(){showAd(adI+1)});
-  document.querySelectorAll('[data-ad]').forEach(function(b){b.addEventListener('click',function(){showAd(parseInt(b.getAttribute('data-ad'),10));openO('ov-ads')})});
-  showAd(0);
+  document.querySelectorAll('[data-ad]').forEach(function(b){b.addEventListener('click',function(){openO('ov-ads');showAdSec(adSecOf[parseInt(b.getAttribute('data-ad'),10)]||0)})});
+  showAdSec(0);
 
   /* Carousel */
   var car=document.getElementById('car'),track=document.getElementById('carTrack'),cnt=document.getElementById('carCnt'),

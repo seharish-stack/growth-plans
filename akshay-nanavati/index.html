@@ -363,6 +363,11 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .vnav button[disabled]{opacity:.35;cursor:default}
 .vnav span{font-size:13.5px;color:#4c5e70;font-variant-numeric:tabular-nums;text-align:center}
 .vpane[hidden]{display:none}
+.vsec{display:flex;gap:8px;flex-wrap:wrap}
+.vsec .vtab{font-size:14px;padding:8px 16px}
+.vsec .vtab i{font-style:normal;opacity:.6;margin-left:6px}
+.vpanes{display:flex;flex-direction:column;gap:34px}
+.seclabel{max-width:760px;margin:0 auto 10px;padding:0 6px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#4c5e70}
 /* Email card */
 .em{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(14,31,46,.08);max-width:760px;width:100%;margin:0 auto}
 .em-top{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #edf2f6}
@@ -911,9 +916,8 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="ovin">
   <div class="vw" data-viewer>
     <h2>Email sequences, written in your voice</h2>
-    <p class="hint">Click any tab to switch emails, or use Prev and Next. Items in [brackets] are merge fields or details to fill in.</p>
+    <p class="hint">Click a section to see every email in it. Items in [brackets] are merge fields or details to fill in.</p>
     <div class="vtabs" data-tabs></div>
-    <div class="vnav"><button type="button" data-prev>‹ Prev</button><span data-count></span><button type="button" data-next>Next ›</button></div>
 
     <div class="vpane" id="pre1" data-group="Pre-masterclass" data-label="Pre 1: Confirmation">
       <div class="em"><div class="em-top"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-img="av" alt=""><div><b>Akshay Nanavati</b><span>Pre-masterclass · Email 1 of 4 · sent on sign-up</span></div></div>
@@ -987,9 +991,8 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   <div class="ovin">
   <div class="vw" data-viewer>
     <h2>Ad creatives for the masterclass</h2>
-    <p class="hint">Click any tab to switch ads, or use Prev and Next. The carousel has its own arrows inside the phone.</p>
+    <p class="hint">Click a format to see every ad in it. The carousel has its own arrows inside the phone.</p>
     <div class="vtabs" data-tabs></div>
-    <div class="vnav"><button type="button" data-prev>‹ Prev</button><span data-count></span><button type="button" data-next>Next ›</button></div>
 
     <div class="vpane" id="st1" data-group="Static ads" data-label="Static 1">
       <div class="sad">
@@ -1116,31 +1119,32 @@ var IMGS={av:"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAQDAwMDAgQ
   var M=['January','February','March','April','May','June','July','August','September','October','November','December'];
   setAll('.tydate',W[dd.getDay()]+' '+dd.getDate()+' '+M[dd.getMonth()]);
 
-  /* Tabbed viewers */
+  /* Section viewers (emails + ads): one button per section, showing every item in that section */
   var viewers={};
   document.querySelectorAll('[data-viewer]').forEach(function(v){
     var panes=[].slice.call(v.querySelectorAll('.vpane')),tabsBox=v.querySelector('[data-tabs]'),
-        prev=v.querySelector('[data-prev]'),next=v.querySelector('[data-next]'),count=v.querySelector('[data-count]'),
-        btns=[],groups={},cur=0;
-    panes.forEach(function(p,i){
+        secs=[],byName={},btns=[],row=document.createElement('div');
+    row.className='vsec';row.setAttribute('role','tablist');tabsBox.appendChild(row);
+    var wrap=document.createElement('div');wrap.className='vpanes';panes[0].parentNode.insertBefore(wrap,panes[0]);
+    panes.forEach(function(p){
       var g=p.getAttribute('data-group');
-      if(!groups[g]){var row=document.createElement('div');row.className='vgrp';row.innerHTML='<small></small><div class="row" role="tablist"></div>';row.querySelector('small').textContent=g;tabsBox.appendChild(row);groups[g]=row.querySelector('.row')}
-      var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');b.textContent=p.getAttribute('data-label');
-      b.setAttribute('aria-controls',p.id);b.addEventListener('click',function(){show(i)});groups[g].appendChild(b);btns.push(b);
-      p.setAttribute('role','tabpanel');
+      if(!byName[g]){byName[g]={n:g,ps:[]};secs.push(byName[g])}
+      byName[g].ps.push(p);wrap.appendChild(p);
+      var lb=document.createElement('div');lb.className='seclabel';lb.textContent=p.getAttribute('data-label');p.insertBefore(lb,p.firstChild);
     });
-    function show(i){
-      cur=Math.max(0,Math.min(panes.length-1,i));
-      panes.forEach(function(p,j){p.hidden=j!==cur});
-      btns.forEach(function(b,j){b.setAttribute('aria-selected',j===cur?'true':'false')});
-      prev.disabled=cur===0;next.disabled=cur===panes.length-1;
-      count.textContent=(cur+1)+' of '+panes.length+' · '+panes[cur].getAttribute('data-label');
+    secs.forEach(function(s,k){
+      var b=document.createElement('button');b.type='button';b.className='vtab';b.setAttribute('role','tab');
+      b.textContent=s.n;var c=document.createElement('i');c.textContent=s.ps.length;b.appendChild(c);
+      b.addEventListener('click',function(){show(k)});row.appendChild(b);btns.push(b);
+    });
+    function show(k){
+      panes.forEach(function(p){p.hidden=secs[k].ps.indexOf(p)<0});
+      btns.forEach(function(b,j){b.setAttribute('aria-selected',j===k?'true':'false')});
+      var o=v.closest('.ov');if(o)o.scrollTop=0;
     }
-    prev.addEventListener('click',function(){show(cur-1)});
-    next.addEventListener('click',function(){show(cur+1)});
     show(0);
     var ov=v.closest('.ov');
-    viewers[ov.id]=function(id){for(var k=0;k<panes.length;k++){if(panes[k].id===id){show(k);return}}show(0)};
+    viewers[ov.id]=function(id){for(var k=0;k<secs.length;k++){for(var m=0;m<secs[k].ps.length;m++){if(secs[k].ps[m].id===id){show(k);return}}}show(0)};
   });
 
   /* Overlays */

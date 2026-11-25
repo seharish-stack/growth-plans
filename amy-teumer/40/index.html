@@ -1,4 +1,15 @@
-<style id="res2x2">@media (min-width:700px){.rgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:22px!important;max-width:900px;margin-left:auto!important;margin-right:auto!important}}</style><title>Amy Teumer · Growth plan</title>
+<style id="pretty-forms">
+.fmbox form{display:flex;flex-direction:column}
+.fmbox h3{font-size:30px!important;line-height:1.1;margin:0 0 8px!important}
+.fmbox form>p,.fmbox>form p:first-of-type{margin:0 0 16px!important;line-height:1.5}
+.fmbox .pfl{display:block;font-size:13.5px;font-weight:600;margin:2px 0 6px;letter-spacing:.01em;opacity:.9}
+.fmbox input:not([type=checkbox]):not([type=radio]),.fmbox select,.fmbox textarea{background-color:rgba(127,127,127,.06)!important;border:1px solid rgba(127,127,127,.28)!important;border-radius:12px!important;padding:13px 15px!important;font-size:15.5px!important;transition:border-color .15s,box-shadow .15s,background-color .15s;margin-bottom:14px!important}
+.fmbox input:not([type=checkbox]):not([type=radio]):focus,.fmbox select:focus,.fmbox textarea:focus{outline:none!important;background-color:#fff!important;border-color:currentColor!important;box-shadow:0 0 0 4px rgba(127,127,127,.14)!important}
+.fmbox select{-webkit-appearance:none;appearance:none;padding-right:40px!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")!important;background-repeat:no-repeat!important;background-position:right 15px center!important}
+.fmbox textarea{min-height:96px}
+.fmbox .pfrow{display:flex;gap:10px}.fmbox .pfrow>*{margin-bottom:14px!important}
+</style>
+<style id="yt-css">.rcard .rthumb:before{display:none!important}.rcard .rthumb:after{content:""!important;left:0!important;top:0!important;right:0!important;bottom:0!important;margin:auto!important;width:66px!important;height:46px!important;border-radius:12px!important;background:#ff0000 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 7l8 5-8 5z' fill='%23fff'/%3E%3C/svg%3E") center/30px no-repeat!important;box-shadow:0 6px 18px rgba(0,0,0,.35)!important}.rcard{transition:transform .18s ease,box-shadow .18s ease}.rcard:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(0,0,0,.14)}@media (prefers-reduced-motion:reduce){.rcard{transition:none}}</style><style id="res2x2">@media (min-width:700px){.rgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:22px!important;max-width:900px;margin-left:auto!important;margin-right:auto!important}}</style><title>Amy Teumer · Growth plan</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1157,4 +1168,25 @@ function end(){if(sx===null)return;track.style.transition='';var w=car.offsetWid
 car.addEventListener('pointerup',end);car.addEventListener('pointercancel',end);
 go(0);
 })();
+</script>
+<script id="pretty-forms-js">
+(function(){try{
+document.querySelectorAll('.fmbox form').forEach(function(f){
+ f.querySelectorAll('input,select,textarea').forEach(function(el){
+  if(el.type==='hidden'||el.type==='checkbox'||el.type==='radio'||el.type==='submit'||el.dataset.pfl)return;
+  if(el.closest('label'))return;
+  var txt='',target=el;
+  if(el.tagName==='SELECT'){
+    var row=el.parentElement; if(row&&row.querySelector('input[type=tel]')&&row!==f)return; // country code select
+    var o=el.options[0]; if(o&&(o.value===''||o.disabled)){txt=o.textContent.trim();o.textContent='Choose one';}
+  } else if(el.type==='tel'){
+    txt='Phone number'; var r=el.parentElement; if(r&&r!==f&&r.querySelector('select'))target=r;
+  } else { txt=(el.getAttribute('placeholder')||'').trim(); }
+  if(!txt)return; el.dataset.pfl=1;
+  var prev=target.previousElementSibling; if(prev&&(prev.tagName==='LABEL'))return;
+  var l=document.createElement('label'); l.className='pfl'; l.textContent=txt; target.parentNode.insertBefore(l,target);
+  if(el.tagName!=='SELECT'&&el.type!=='tel')el.setAttribute('placeholder','');
+ });
+});
+}catch(e){}})();
 </script>

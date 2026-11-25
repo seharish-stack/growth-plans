@@ -83,8 +83,12 @@ section{display:flex;flex-direction:column;gap:28px}
 .fine2{font-size:13px;color:var(--muted)}
 
 /* Recommendation */
-.funnel{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}
-.fstep{flex:1 1 160px;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:2px;position:relative;min-width:0}
+.funnel{display:flex;align-items:center;gap:0;padding-top:14px}
+.farr{flex:none;align-self:center;width:28px;height:2px;background:var(--muted);position:relative;margin:0 2px}
+.farr::after{content:"";position:absolute;right:-1px;top:-5px;border-left:8px solid var(--muted);border-top:6px solid transparent;border-bottom:6px solid transparent}
+.fgroup{flex:2 1 0;min-width:0;display:flex;align-items:center;border:2px dashed var(--acc);border-radius:16px;padding:26px 12px 14px;position:relative;align-self:stretch}
+.fglab{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--bg);color:var(--acc);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:2px 10px;white-space:nowrap}
+.fstep{flex:1 1 0;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:2px;position:relative;min-width:0}
 .fstep.new{border-color:var(--acc)}
 .fstep.new::before{content:"New";position:absolute;top:-11px;left:12px;background:var(--acc);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px}
 .fstep b{font-family:var(--display);font-weight:700}
@@ -92,6 +96,14 @@ section{display:flex;flex-direction:column;gap:28px}
 .fstep.end{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 .fstep.end span{color:var(--bg);opacity:.8}
 .groups{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:820px){
+  .funnel,.fgroup{flex-direction:column;align-items:stretch}
+  .fstep{flex:none}
+  .fgroup{flex:none;padding:28px 14px 16px;margin-top:14px}
+  .farr{width:2px;height:28px;margin:4px auto}
+  .farr::after{right:auto;left:-5px;top:auto;bottom:-1px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--muted);border-bottom:0}
+  .fgroup .farr{margin:6px auto 10px}
+}
 .grp{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:8px}
 .grp p:last-child{color:var(--muted);font-size:15.5px}
 .grp.q{border:2px solid var(--acc)}
@@ -237,6 +249,8 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .ph-box.v{aspect-ratio:16/10;min-height:0;flex-direction:column;gap:10px}
 .ph-box.v::before{content:"";width:46px;height:46px;border-radius:50%;background:#1f262b url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 7l8 5-8 5z' fill='%23fff'/%3E%3C/svg%3E") center/26px no-repeat}
 .pgrid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.pgrid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.pgrid2 .ph-box.v{aspect-ratio:auto;min-height:150px}
 .faq{display:flex;flex-direction:column;gap:10px;max-width:720px}
 .faq details{background:var(--pbg);border:1px solid var(--pline);border-radius:12px;padding:14px 18px}
 .faq summary{cursor:pointer;font-weight:600;font-size:16.5px}
@@ -257,6 +271,11 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .tstep .n{width:46px;height:46px;border-radius:50%;background:#1f262b;color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:20px;display:flex;align-items:center;justify-content:center}
 .tstep h3{font-size:23px}
 .tstep p{color:var(--pmut)}
+.tyhero h1{max-width:100%}
+.pg .tstep{width:100%;max-width:100%;min-width:0}
+.inbox-ill{width:min(420px,100%);background:var(--pbg);border:1px solid var(--pline);border-radius:14px;padding:16px;display:flex;gap:12px;align-items:center;text-align:left}
+.inbox-ill .env{width:48px;height:36px;border-radius:6px;background:var(--psoft);border:2px solid var(--pacc);position:relative;flex:none}
+.inbox-ill .env::after{content:"";position:absolute;left:6px;right:6px;top:5px;height:14px;border-left:2px solid var(--pacc);border-bottom:2px solid var(--pacc);transform:rotate(-45deg) scale(.7);transform-origin:center}
 .calbtn{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .calbtn span{background:var(--pbg);border:1px solid var(--pline);border-radius:10px;padding:10px 16px;font-weight:600;font-size:15px}
 /* Gmail mock */
@@ -270,7 +289,8 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .gm-logo i::after{content:"";position:absolute;left:4px;right:4px;top:0;height:13px;background:linear-gradient(to bottom right,transparent 48%,#ea4335 49% 60%,transparent 61%),linear-gradient(to bottom left,transparent 48%,#ea4335 49% 60%,transparent 61%);background-size:50% 100%;background-position:left,right;background-repeat:no-repeat}
 .gm-search{flex:1;min-width:0;background:#eaf1fb;border-radius:999px;padding:9px 16px;color:#5f6368;font-size:15px;white-space:nowrap;overflow:hidden}
 .gm-av{width:32px;height:32px;border-radius:50%;background:#1a73e8;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;flex:none}
-.gm-main{display:grid;grid-template-columns:200px 1fr}
+.gm-main{display:grid;grid-template-columns:200px minmax(0,1fr)}
+.gm-main>div{min-width:0}
 .gm-side{padding:12px 8px;display:flex;flex-direction:column;gap:2px;font-size:14px}
 .gm-comp{background:#c2e7ff;border-radius:16px;padding:14px 18px;font-weight:500;margin-bottom:10px;align-self:flex-start}
 .gm-side div:not(.gm-comp){padding:6px 14px;border-radius:0 999px 999px 0;display:flex;justify-content:space-between}
@@ -331,9 +351,20 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
 .mfbox label{display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600}
 .mfbox input,.mfbox select,.mfbox textarea{font:inherit;font-weight:400;padding:12px 14px;border:1.5px solid #cfd6dd;border-radius:10px;background:#f8fafb;color:#1f262b;width:100%}
 .mfbox textarea{min-height:80px;resize:vertical}
-.mfbox .pbtn{align-self:stretch;--pacc:#b83a35}
+.mfbox .pbtn{align-self:stretch;width:100%;--pacc:#b83a35;font-size:17px;padding:16px 24px}
+.mfbox .phrow{display:flex;gap:8px}
+.mfbox .phrow select{width:auto;flex:none;max-width:44%}
+.mfbox .phrow input{flex:1;min-width:0}
+.mfsum{background:#f3f5f7;border:1px solid #dde2e7;border-radius:12px;padding:6px 16px;display:flex;flex-direction:column}
+.mfsum .r{display:flex;justify-content:space-between;gap:12px;padding:10px 0;font-size:15px;border-bottom:1px solid #dde2e7}
+.mfsum .r:last-child{border-bottom:0}
+.mfsum .r b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.mfsum .tot{font-weight:700;font-size:16px}
+.mfsum .tot b{color:#b83a35}
+.mfsecure{text-align:center;font-size:13px !important;color:#5a646c}
 .mfx{all:unset;cursor:pointer;position:absolute;right:14px;top:12px;width:32px;height:32px;border-radius:50%;background:#eef1f4;text-align:center;line-height:32px;font-size:18px;font-weight:700}
 .done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:10px 0}
+.done[hidden],.slots[hidden],.mfbox [hidden]{display:none !important}
 .done .ok{width:64px;height:64px;border-radius:50%;background:#b83a35;position:relative}
 .done .ok::after{content:"";position:absolute;left:21px;top:14px;width:16px;height:28px;border-right:5px solid #fff;border-bottom:5px solid #fff;transform:rotate(45deg)}
 .slots{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
@@ -464,12 +495,12 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   .phero,.meet,.uprow,.adone{grid-template-columns:1fr}
   .phero .portrait{order:-1;max-width:260px}
   .meet .portrait{max-width:220px}
-  .gm-main{grid-template-columns:1fr}
+  .gm-main{grid-template-columns:minmax(0,1fr)}
   .gm-side{display:none}
   .coach{grid-template-columns:1fr}
 }
 @media (max-width:560px){
-  .pgrid3,.ticks{grid-template-columns:1fr}
+  .pgrid3,.pgrid2,.ticks{grid-template-columns:1fr}
   .mock{grid-template-columns:1fr 1fr;padding:14px}
   .mock .book{grid-column:span 2;aspect-ratio:auto;min-height:170px}
   .mock2{grid-template-columns:1fr}
@@ -568,9 +599,15 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
   </div>
   <div class="funnel">
     <div class="fstep"><b>Instagram + Meta ads</b><span>129k followers, plus ads to women who don’t follow you yet</span></div>
-    <div class="fstep new"><b>Free masterclass</b><span>The Awakening Masterclass, 60 minutes live</span></div>
-    <div class="fstep new"><b>[$37] Awakening Toolkit</b><span>thank-you page upsell, built around your book</span></div>
+    <span class="farr" aria-hidden="true"></span>
+    <div class="fgroup"><span class="fglab">The new middle</span>
+      <div class="fstep new"><b>Free masterclass</b><span>The Awakening Masterclass, 60 minutes live</span></div>
+      <span class="farr" aria-hidden="true"></span>
+      <div class="fstep new"><b>[$37] Awakening Toolkit</b><span>thank-you page upsell, built around your book</span></div>
+    </div>
+    <span class="farr" aria-hidden="true"></span>
     <div class="fstep new"><b>Application</b><span>on the replay page, then the private call</span></div>
+    <span class="farr" aria-hidden="true"></span>
     <div class="fstep end"><b>ADHD Mindset Mastery</b><span>calls with women ready to start</span></div>
   </div>
   <div class="impl">
@@ -781,20 +818,22 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
     <div class="ps">
       <p class="kick">Kind words</p>
       <h2>From women who worked with Sara</h2>
-      <div class="pgrid3">
+      <div class="pgrid2">
         <div class="ph-box">[Client review from your Client Reviews highlight]</div>
+        <div class="ph-box">[Client win from your Instagram]</div>
+        <div class="ph-box v">[Video testimonial from an ADHD Mindset Mastery client]</div>
         <div class="ph-box">[Client review from your Client Reviews highlight]</div>
-        <div class="ph-box v">[Video testimonial from a coaching client]</div>
       </div>
     </div>
     <div class="ps alt">
       <p class="kick">Questions</p>
-      <h2>Before you register</h2>
+      <h2>Before you grab your seat</h2>
       <div class="faq">
         <details><summary>Is it really free?</summary><p>Yes. The class, the live Q&amp;A and the replay are all free.</p></details>
         <details><summary>What if I can’t make it live?</summary><p>Register anyway. Everyone who signs up gets the replay by email.</p></details>
         <details><summary>Is this medical advice?</summary><p>No. It’s coaching and education about mindset and day-to-day life. It doesn’t replace care from a doctor or licensed professional.</p></details>
         <details><summary>Who is it for?</summary><p>Women who received an ADHD diagnosis as adults and want practical ways to work with their brain instead of against it.</p></details>
+        <details><summary>What happens after I register?</summary><p>You’ll get a confirmation email from Sara Kelly. Reply YES to confirm your seat, then add the class to your calendar.</p></details>
       </div>
       <button class="pbtn c" data-form="reg" type="button">Save my free seat</button>
       <p class="disc">Educational content, not medical advice.</p>
@@ -819,6 +858,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
       <div class="tstep">
         <span class="n">1</span><h3>Check your inbox</h3>
         <p>Your confirmation email is on its way. It comes from Sara Kelly.</p>
+        <div class="inbox-ill"><span class="env"></span><div><b>Search your inbox for “The Awakening Masterclass”</b><p style="font-size:14px">Not there in 5 minutes? Check Promotions or Spam.</p></div></div>
       </div>
       <div class="tstep" style="width:100%">
         <span class="n">2</span><h3>Reply “YES” to the email we just sent you</h3>
@@ -1038,8 +1078,13 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
     <form id="mfForm" style="display:flex;flex-direction:column;gap:14px">
       <h3 id="mfTitle">Save your free seat</h3>
       <p id="mfSub">The Awakening Masterclass with Sara Kelly · Live, 60 minutes · Free</p>
+      <div class="mfsum" id="mfSum" style="display:none">
+        <div class="r"><span>The Awakening Toolkit (one-time payment)</span><b>[$37]</b></div>
+        <div class="r tot"><span>Total today</span><b>[$37]</b></div>
+      </div>
       <label>First name<input name="n" required autocomplete="given-name"></label>
-      <label>Email<input name="e" type="email" required autocomplete="email"></label>
+      <label>Email address<input name="e" type="email" required autocomplete="email"></label>
+      <label id="mfPhone">Phone number<span class="phrow"><select name="cc" aria-label="Country code"><option value="+1" selected>+1 US/CA</option><option value="+44">+44 UK</option><option value="+61">+61 AU</option><option value="+64">+64 NZ</option><option value="+353">+353 IE</option><option value="+27">+27 ZA</option><option value="+91">+91 IN</option><option value="+971">+971 UAE</option><option value="other">Other</option></select><input name="ph" type="tel" autocomplete="tel-national" placeholder="Phone number"></span></label>
       <div id="mfApply" style="display:none;flex-direction:column;gap:14px">
         <label>What would you most like help with?<select name="q1"><option>Focus and follow-through</option><option>Confidence and self-trust</option><option>Work and career</option><option>Routines at home</option></select></label>
         <label>Where are you in your journey?<select name="q2"><option>Recently diagnosed</option><option>Diagnosed a few years ago</option><option>Still exploring</option></select></label>
@@ -1047,6 +1092,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
         <label>If it’s a fit, are you ready to start coaching in the next 30 days?<select name="q4"><option>Yes</option><option>Maybe</option><option>Not yet</option></select></label>
       </div>
       <button class="pbtn" type="submit" id="mfBtn">Save my free seat</button>
+      <p class="mfsecure" id="mfSecure" style="display:none">Secure checkout. Card details are taken on the secure payment page.</p>
     </form>
     <div class="done" id="mfDone" hidden>
       <span class="ok"></span>
@@ -1099,7 +1145,7 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
       apply=document.getElementById('mfApply'),slots=document.getElementById('slots'),slotMsg=document.getElementById('slotMsg');
   var CFG={
     reg:{t:'Save your free seat',s:'The Awakening Masterclass with Sara Kelly · Live, 60 minutes · Free',b:'Save my free seat',d:'Your seat is saved. Check your inbox and reply YES to confirm.'},
-    kit:{t:'Add The Awakening Toolkit',s:'One-time payment of [$37] · Instant access',b:'Add the Toolkit',d:'The Awakening Toolkit has been added. Your download link is on its way to your inbox.'},
+    kit:{t:'Add The Awakening Toolkit',s:'One-time payment of [$37] · Instant access',b:'Complete checkout',d:'The Awakening Toolkit has been added. Your download link is on its way to your inbox.'},
     apply:{t:'Apply to work with Sara',s:'Two minutes. If it looks like a fit, you’ll pick a time for your private 30-minute call next.',b:'Submit my application',d:'Application received. Pick a time for your private call with Sara:'}
   };
   var cur='reg';
@@ -1107,6 +1153,11 @@ footer{text-align:center;font-size:13px;color:var(--muted)}
     cur=kind;var c=CFG[kind];
     document.getElementById('mfTitle').textContent=c.t;document.getElementById('mfSub').textContent=c.s;document.getElementById('mfBtn').textContent=c.b;
     apply.style.display=kind==='apply'?'flex':'none';
+    var ck=kind==='kit';
+    document.getElementById('mfSum').style.display=ck?'flex':'none';
+    document.getElementById('mfSecure').style.display=ck?'block':'none';
+    document.getElementById('mfPhone').style.display=ck?'none':'flex';
+    form.querySelector('[name=ph]').required=!ck;
     form.hidden=false;form.style.display='flex';done.hidden=true;slots.hidden=true;slotMsg.hidden=true;
     slots.querySelectorAll('button').forEach(function(x){x.classList.remove('sel')});
     form.reset();mf.hidden=false;var f=form.querySelector('input');if(f)f.focus();

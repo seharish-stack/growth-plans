@@ -914,6 +914,31 @@ function showAd(i){adCur=(i+ADL.length)%ADL.length;adps.forEach(function(p){p.hi
 document.getElementById('ad-prev').onclick=function(){showAd(adCur-1)};
 document.getElementById('ad-next').onclick=function(){showAd(adCur+1)};
 showAd(0);
+/*sec-tabs*/
+/* Section tabs (25 Nov SOP): one button per section, showing every email or ad in that section at once */
+(function(){
+ try{
+ var css=document.createElement('style');css.textContent='.vsec{display:flex;gap:8px;flex-wrap:wrap}.vsec .vtab{font-size:14px;padding:8px 16px}.vsec .vtab i{font-style:normal;opacity:.6;margin-left:6px}.secitem{margin:0 auto 34px}.seclabel{max-width:760px;margin:26px auto 10px;padding:0 6px;font:600 12px/1.2 var(--sans,system-ui);letter-spacing:.16em;text-transform:uppercase;color:#807c78}';
+ document.head.appendChild(css);
+ if(typeof EM!=='undefined'&&typeof GROUPS!=='undefined'&&typeof showEm==='function'){
+  var et=document.getElementById('em-tabs'),ev=document.getElementById('em-view');
+  var secs=GROUPS.map(function(g){var ix=[];EM.forEach(function(e,i){if(e.g===g[0])ix.push(i)});return {n:g[1],ix:ix}}).filter(function(s){return s.ix.length});
+  var row=document.createElement('div');row.className='vsec';
+  et.innerHTML='';et.appendChild(row);
+  function showSec(k){var h='';secs[k].ix.forEach(function(i){showEm(i);h+='<div class="secitem"><div class="seclabel">'+EM[i].l+'</div>'+ev.innerHTML+'</div>'});ev.innerHTML=h;row.querySelectorAll('.vtab').forEach(function(b,j){b.classList.toggle('on',j===k)});var o=document.getElementById('ov-emails');if(o)o.scrollTop=0;}
+  secs.forEach(function(s,k){var b=document.createElement('button');b.type='button';b.className='vtab';b.innerHTML=s.n+'<i>'+s.ix.length+'</i>';b.onclick=function(){showSec(k)};row.appendChild(b)});
+  showSec(0);
+ }
+ if(typeof ADG!=='undefined'&&typeof adps!=='undefined'){
+  var at=document.getElementById('ad-tabs');
+  var row2=document.createElement('div');row2.className='vsec';at.innerHTML='';at.appendChild(row2);
+  var grp=ADG.filter(function(g){return g[1]&&g[1].length});
+  function showAg(k){var ix=grp[k][1];adps.forEach(function(p){p.hidden=ix.indexOf(+p.getAttribute('data-ad'))<0});row2.querySelectorAll('.vtab').forEach(function(b,j){b.classList.toggle('on',j===k)});var o=document.getElementById('ov-ads');if(o)o.scrollTop=0;}
+  grp.forEach(function(g,k){var b=document.createElement('button');b.type='button';b.className='vtab';b.innerHTML=g[0]+'<i>'+g[1].length+'</i>';b.onclick=function(){showAg(k)};row2.appendChild(b)});
+  showAg(0);
+ }
+ }catch(e){console.log('sec-tabs',e)}
+})();
 
 // overlays
 var lastFocus=null;
